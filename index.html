@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Crude Awakening – RCM</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #4875D9;
+    --secondary-1: #256AB5;
+    --secondary-2: #0A7DD9;
+    --secondary-3: #87ADD6;
+    --secondary-4: #2C3C52;
+    --secondary-5: #0D3D6D;
+    --secondary-6: #00C1D5;
+    --secondary-7: #23415C;
+    --secondary-8: #A2D5FF;
+    --heading: #256AB5;
+    --body: #132C48;
+    --link: #0A7DD9;
+    --button: #256AB5;
+    --cover-bg: #0D1B2E;
+    --navy: #132C48;
+    --deep-blue: #0D3D6D;
+    --text-primary: #132C48;
+    --text-secondary: #2C3C52;
+    --text-light: #5a7a9b;
+    --bg-white: #ffffff;
+    --bg-cream: #f7fafd;
+    --bg-light: #eef4fa;
+    --border-light: #d0dfee;
+    --chart-1: #4875D9;
+    --chart-2: #256AB5;
+    --chart-3: #00C1D5;
+    --chart-4: #0A7DD9;
+    --chart-5: #0D3D6D;
+    --chart-6: #87ADD6;
+    --chart-red: #d94848;
+    --chart-green: #2ba84a;
+    --chart-orange: #d98b32;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--body);background:var(--bg-cream);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;}
+
+  /* COVER */
+  .cover-page{min-height:100vh;background:var(--cover-bg);background-image:radial-gradient(ellipse at 20% 50%,rgba(72,117,217,.12) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(0,193,213,.08) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(13,61,109,.15) 0%,transparent 50%),linear-gradient(180deg,#0D1B2E 0%,#132C48 50%,#0D3D6D 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 40px;position:relative;overflow:hidden;}
+  .cover-page::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border:1px solid rgba(72,117,217,.08);border-radius:50%;}
+  .cover-page::after{content:'';position:absolute;bottom:-150px;left:-150px;width:500px;height:500px;border:1px solid rgba(0,193,213,.06);border-radius:50%;}
+  .cover-logo-area{margin-bottom:60px;z-index:2;}
+  .cover-logo-area img{height:52px;width:auto;filter:brightness(0) invert(1);}
+  .cover-content{max-width:820px;text-align:center;z-index:2;}
+  .cover-rule{width:80px;height:2px;background:var(--secondary-6);margin:0 auto 40px;opacity:.8;}
+  .cover-title-main{font-family:'Playfair Display',serif;font-size:50px;font-weight:800;color:#fff;line-height:1.15;margin-bottom:10px;letter-spacing:-.5px;text-shadow:0 2px 30px rgba(0,0,0,.3);}
+  .cover-title-accent{color:var(--secondary-6);}
+  .cover-title-sub{font-family:'Playfair Display',serif;font-size:24px;font-weight:600;color:var(--secondary-8);line-height:1.35;margin-bottom:40px;}
+  .cover-rule-2{width:50px;height:1px;background:var(--secondary-6);margin:0 auto 36px;opacity:.5;}
+  .cover-subtitle{font-family:'Inter',sans-serif;font-size:14px;font-weight:400;color:var(--secondary-3);line-height:1.75;max-width:700px;margin:0 auto 50px;opacity:.85;}
+  .cover-date{font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:rgba(0,193,213,.7);letter-spacing:3px;text-transform:uppercase;}
+
+  /* HEADER BAR */
+  .header-bar{background:var(--navy);padding:16px 40px;display:flex;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15);}
+  .header-bar img{height:32px;width:auto;filter:brightness(0) invert(1);}
+
+  /* MAIN */
+  .content-wrapper{max-width:900px;margin:0 auto;padding:0 40px;}
+
+  /* TOC */
+  .toc-page{padding:80px 0 60px;border-bottom:1px solid var(--border-light);}
+  .toc-header{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--heading);margin-bottom:40px;}
+  .toc-part{font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--secondary-6);letter-spacing:2px;text-transform:uppercase;margin-top:30px;margin-bottom:8px;padding-top:20px;border-top:1px solid var(--border-light);}
+  .toc-part:first-of-type{margin-top:0;border-top:none;padding-top:0;}
+  .toc-list{list-style:none;}
+  .toc-item{display:flex;align-items:baseline;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.04);cursor:pointer;transition:all .2s;}
+  .toc-item:hover{padding-left:8px;}
+  .toc-item:hover .toc-label{color:var(--link);}
+  .toc-number{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--primary);min-width:40px;}
+  .toc-label{font-size:15px;font-weight:500;color:var(--body);transition:color .2s;}
+  .toc-dots{flex:1;border-bottom:1px dotted var(--border-light);margin:0 12px;min-width:20px;}
+
+  /* PART DIVIDERS */
+  .part-divider{padding:60px 0 10px;text-align:center;}
+  .part-divider-label{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--secondary-6);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .part-divider-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--heading);}
+
+  /* SECTIONS */
+  .section{padding:60px 0 50px;border-bottom:1px solid var(--border-light);}
+  .section:last-child{border-bottom:none;}
+  .section-number{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--primary);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+  .section-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--heading);margin-bottom:8px;line-height:1.25;}
+  .section-subtitle{font-size:15px;color:var(--text-light);margin-bottom:28px;font-weight:400;}
+  .section p{margin-bottom:16px;color:var(--text-secondary);font-size:15px;line-height:1.8;}
+  .section h3{font-family:'Inter',sans-serif;font-size:19px;font-weight:700;color:var(--heading);margin:32px 0 14px;}
+  .section h4{font-family:'Inter',sans-serif;font-size:16px;font-weight:600;color:var(--deep-blue);margin:24px 0 10px;}
+
+  /* CALLOUT */
+  .callout{background:var(--bg-light);border-left:3px solid var(--primary);padding:22px 28px;margin:28px 0;border-radius:0 8px 8px 0;}
+  .callout p{margin-bottom:8px;}
+  .callout p:last-child{margin-bottom:0;}
+  .callout-title{font-weight:700;color:var(--heading);font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px!important;}
+  .callout-cyan{background:#e6fafb;border-left-color:var(--secondary-6);}
+  .callout-red{background:#fef2f2;border-left-color:var(--chart-red);}
+  .callout-green{background:#ecfdf5;border-left-color:var(--chart-green);}
+  .callout-dark{background:#e8eef5;border-left-color:var(--secondary-5);}
+  .callout-orange{background:#fff8f0;border-left-color:var(--chart-orange);}
+
+  /* DATA TABLES */
+  .data-table-wrapper{margin:28px 0;overflow-x:auto;border-radius:8px;border:1px solid var(--border-light);}
+  .data-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .data-table thead{background:var(--navy);color:#fff;}
+  .data-table th{padding:12px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.3px;white-space:nowrap;}
+  .data-table td{padding:10px 14px;border-bottom:1px solid var(--border-light);color:var(--text-secondary);}
+  .data-table tbody tr{transition:background .2s;}
+  .data-table tbody tr:nth-child(even){background:var(--bg-cream);}
+  .data-table tbody tr:hover{background:#dce8f5;}
+  .data-table .num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;}
+  .data-table .negative{color:var(--chart-red);font-weight:600;}
+  .data-table .positive{color:var(--chart-green);font-weight:600;}
+  .data-table .highlight-row{background:rgba(72,117,217,.06)!important;}
+
+  /* CHART CONTAINERS */
+  .chart-container{margin:32px 0;background:var(--bg-white);border:1px solid var(--border-light);border-radius:10px;padding:28px;position:relative;}
+  .chart-title{font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:var(--heading);margin-bottom:6px;}
+  .chart-caption{font-size:13px;color:var(--text-light);margin-bottom:18px;}
+
+  /* BAR CHART */
+  .bar-chart{display:flex;flex-direction:column;gap:8px;}
+  .bar-row{display:flex;align-items:center;gap:10px;}
+  .bar-label{min-width:170px;font-size:12px;font-weight:500;color:var(--text-secondary);text-align:right;}
+  .bar-track{flex:1;height:30px;background:#edf2f8;border-radius:4px;position:relative;overflow:hidden;cursor:pointer;}
+  .bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;font-size:11px;font-weight:700;color:#fff;min-width:40px;transition:all .5s ease,filter .2s;position:relative;}
+  .bar-track:hover .bar-fill{filter:brightness(1.15);}
+  .bar-fill.c1{background:linear-gradient(135deg,#4875D9,#3660c4);}
+  .bar-fill.c2{background:linear-gradient(135deg,#256AB5,#1a5a9e);}
+  .bar-fill.c3{background:linear-gradient(135deg,#00C1D5,#009db0);}
+  .bar-fill.c4{background:linear-gradient(135deg,#0A7DD9,#086bbf);}
+  .bar-fill.c5{background:linear-gradient(135deg,#0D3D6D,#0a2f55);}
+  .bar-fill.c6{background:linear-gradient(135deg,#87ADD6,#6f9ac4);}
+  .bar-fill.c7{background:linear-gradient(135deg,#2C3C52,#1e2c3e);}
+  .bar-fill.c8{background:linear-gradient(135deg,#23415C,#1a3248);}
+
+  /* TOOLTIP */
+  #globalTooltip{display:none;position:fixed;background:var(--navy);color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;line-height:1.5;z-index:9999;pointer-events:none;box-shadow:0 8px 30px rgba(0,0,0,.3);border:1px solid rgba(72,117,217,.3);max-width:340px;}
+
+  /* SCENARIO CARDS */
+  .scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:28px 0;}
+  .scenario-card{background:var(--bg-white);border:1px solid var(--border-light);border-radius:10px;padding:24px;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;}
+  .scenario-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,61,109,.12);}
+  .scenario-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+  .scenario-card.base::before{background:var(--primary);}
+  .scenario-card.moderate::before{background:var(--chart-orange);}
+  .scenario-card.elevated::before{background:var(--chart-red);}
+  .scenario-card.extreme::before{background:#8b0000;}
+  .scenario-card h4{font-size:15px;font-weight:700;margin:0 0 4px;color:var(--heading);}
+  .scenario-card .price-range{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;margin:8px 0;}
+  .scenario-card.base .price-range{color:var(--primary);}
+  .scenario-card.moderate .price-range{color:var(--chart-orange);}
+  .scenario-card.elevated .price-range{color:var(--chart-red);}
+  .scenario-card.extreme .price-range{color:#8b0000;}
+  .scenario-card .desc{font-size:13px;color:var(--text-light);line-height:1.6;}
+  .scenario-card .impacts{margin-top:12px;padding-top:12px;border-top:1px solid var(--border-light);}
+  .scenario-card .impact-row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;}
+  .scenario-card .impact-label{color:var(--text-light);}
+  .scenario-card .impact-value{font-weight:600;font-family:'JetBrains Mono',monospace;font-size:12px;}
+
+  /* STAT BOXES */
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:28px 0;}
+  .stat-row.cols-3{grid-template-columns:repeat(3,1fr);}
+  .stat-box{text-align:center;padding:24px 16px;background:var(--bg-white);border:1px solid var(--border-light);border-radius:10px;transition:transform .2s,box-shadow .2s;}
+  .stat-box:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(13,61,109,.1);}
+  .stat-value{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:var(--heading);line-height:1.1;}
+  .stat-unit{font-size:16px;color:var(--primary);}
+  .stat-label{font-size:12px;color:var(--text-light);margin-top:6px;line-height:1.4;}
+
+  /* FLOW DIAGRAM */
+  .flow-diagram{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:28px 0;padding:28px;background:var(--bg-white);border:1px solid var(--border-light);border-radius:10px;}
+  .flow-node{background:var(--navy);color:#fff;padding:10px 16px;border-radius:8px;font-size:12px;font-weight:600;text-align:center;min-width:90px;transition:transform .2s;}
+  .flow-node:hover{transform:scale(1.05);}
+  .flow-node.accent-node{background:var(--primary);}
+  .flow-arrow{font-size:18px;color:var(--primary);font-weight:700;}
+
+  /* PULL QUOTE */
+  .pull-quote{border-left:3px solid var(--secondary-6);padding:20px 28px;margin:32px 0;background:linear-gradient(135deg,#f7fafd,#eef4fa);border-radius:0 8px 8px 0;}
+  .pull-quote p{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--heading);line-height:1.5;font-style:italic;}
+
+  /* TIMELINE */
+  .timeline{position:relative;margin:28px 0;padding-left:30px;border-left:2px solid var(--border-light);}
+  .timeline-item{position:relative;margin-bottom:24px;padding-left:20px;}
+  .timeline-item::before{content:'';position:absolute;left:-37px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--primary);border:3px solid var(--bg-cream);transition:background .2s;}
+  .timeline-item:hover::before{background:var(--secondary-6);}
+  .timeline-date{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--primary);font-weight:600;margin-bottom:4px;}
+  .timeline-text{font-size:14px;color:var(--text-secondary);line-height:1.6;}
+
+  /* HEDGING TABLE */
+  .hedge-table td:first-child{font-weight:600;color:var(--heading);}
+
+  /* BUTTON */
+  .btn{display:inline-flex;align-items:center;background:var(--button);color:#fff;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none;transition:background .2s,transform .2s;border:none;cursor:pointer;}
+  .btn:hover{background:var(--deep-blue);transform:translateY(-1px);text-decoration:none;}
+
+  /* FOOTER */
+  .page-footer{background:var(--navy);color:rgba(255,255,255,.7);padding:50px 40px;margin-top:60px;text-align:center;}
+  .footer-logo img{height:36px;filter:brightness(0) invert(1);margin-bottom:15px;}
+  .footer-text{font-size:12px;line-height:1.8;max-width:700px;margin:0 auto;}
+  .footer-divider{width:50px;height:1px;background:var(--secondary-6);margin:20px auto;opacity:.4;}
+
+  /* REFERENCES */
+  .ref-list{font-size:13px;color:var(--text-secondary);line-height:1.7;}
+  .ref-list p{margin-bottom:8px;}
+
+  /* RESPONSIVE */
+  @media(max-width:768px){
+    .cover-title-main{font-size:30px;}
+    .cover-title-sub{font-size:17px;}
+    .cover-page{padding:40px 20px;}
+    .content-wrapper{padding:0 20px;}
+    .section-title{font-size:22px;}
+    .scenario-grid{grid-template-columns:1fr;}
+    .stat-row,.stat-row.cols-3{grid-template-columns:1fr 1fr;}
+    .bar-label{min-width:110px;font-size:11px;}
+    .flow-diagram{flex-direction:column;}
+    .flow-arrow{transform:rotate(90deg);}
+    .header-bar{padding:12px 20px;}
+  }
+  @media(max-width:480px){
+    .stat-row,.stat-row.cols-3{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ COVER PAGE ══════════ -->
+<div class="cover-page">
+  <div class="cover-logo-area">
+    <img src="https://www.rcmalternatives.com/wp-content/themes/RCM/assets/images/RCMLogoBlue@2x.png" alt="RCM">
+  </div>
+  <div class="cover-content">
+    <div class="cover-rule"></div>
+    <div class="cover-title-main">A <span class="cover-title-accent">Crude</span> Awakening</div>
+    <div class="cover-title-sub">How Oil Prices Ripple Through the Global Economy</div>
+    <div class="cover-rule-2"></div>
+    <div class="cover-subtitle">
+      Quantifying Crude Oil's Share of Final Consumer Prices, Macroeconomic Impact Scenarios, and How the Energy Futures Markets Hedge the Risk We're Now Living Through
+    </div>
+    <div class="cover-date">March 2026</div>
+  </div>
+</div>
+
+<!-- ══════════ HEADER BAR ══════════ -->
+<div class="header-bar">
+  <img src="https://www.rcmalternatives.com/wp-content/themes/RCM/assets/images/RCMLogoBlue@2x.png" alt="RCM">
+</div>
+
+<div class="content-wrapper">
+
+<!-- ══════════ KEY METRICS ══════════ -->
+<div class="section" style="padding-top:50px;">
+  <div class="section-number">Key Metrics at a Glance</div>
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-value">$88.13</div>
+      <div class="stat-label">Brent Crude<br>(Bloomberg, 3/23/2026)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">+1.7<span class="stat-unit">pp</span></div>
+      <div class="stat-label">CPI Impact at $150/bbl<br>(central estimate, nonlinear model)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value" style="font-size:22px;">−$260B<span style="font-size:16px;"> to </span>−$320B</div>
+      <div class="stat-label">Annual Net GDP Loss at $150<br>(after producer offset)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">8.3<span class="stat-unit">M</span></div>
+      <div class="stat-label">CME Energy Contracts<br>Record single-day, Mar 6 2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TABLE OF CONTENTS ══════════ -->
+<div class="toc-page">
+  <div class="toc-header">Contents</div>
+
+  <div class="toc-part">Part I — Oil in the Consumer Economy</div>
+  <ul class="toc-list">
+    <li class="toc-item" onclick="document.getElementById('s1').scrollIntoView({behavior:'smooth'})"><span class="toc-number">1</span><span class="toc-label">Executive Summary</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})"><span class="toc-number">2</span><span class="toc-label">Introduction and Geopolitical Context</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s3').scrollIntoView({behavior:'smooth'})"><span class="toc-number">3</span><span class="toc-label">Methodology and Analytical Framework</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s4').scrollIntoView({behavior:'smooth'})"><span class="toc-number">4</span><span class="toc-label">Transportation Fuels and Global Mobility</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s5').scrollIntoView({behavior:'smooth'})"><span class="toc-number">5</span><span class="toc-label">Petrochemicals, Plastics, and Manufactured Goods</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s6').scrollIntoView({behavior:'smooth'})"><span class="toc-number">6</span><span class="toc-label">Agriculture and Food Supply</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s7').scrollIntoView({behavior:'smooth'})"><span class="toc-number">7</span><span class="toc-label">Construction and Infrastructure</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s8').scrollIntoView({behavior:'smooth'})"><span class="toc-number">8</span><span class="toc-label">Consumer Goods, Services, and Broader Impacts</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s9').scrollIntoView({behavior:'smooth'})"><span class="toc-number">9</span><span class="toc-label">Cross-Sector Summary and Composite Analysis</span><span class="toc-dots"></span></li>
+  </ul>
+
+  <div class="toc-part">Part II — Macroeconomic Impact</div>
+  <ul class="toc-list">
+    <li class="toc-item" onclick="document.getElementById('s10').scrollIntoView({behavior:'smooth'})"><span class="toc-number">10</span><span class="toc-label">Inflation Transmission: CPI and PCE Effects</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s11').scrollIntoView({behavior:'smooth'})"><span class="toc-number">11</span><span class="toc-label">GDP Impact and Economic Cost</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s12').scrollIntoView({behavior:'smooth'})"><span class="toc-number">12</span><span class="toc-label">Recession Risk, Duration, and Structural Context</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s13').scrollIntoView({behavior:'smooth'})"><span class="toc-number">13</span><span class="toc-label">Cascading Effects, Feedback Loops, and Systemic Risk</span><span class="toc-dots"></span></li>
+  </ul>
+
+  <div class="toc-part">Part III — Energy Futures &amp; Hedging</div>
+  <ul class="toc-list">
+    <li class="toc-item" onclick="document.getElementById('s14').scrollIntoView({behavior:'smooth'})"><span class="toc-number">14</span><span class="toc-label">How the Global Economy Hedges Oil Risk</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s15').scrollIntoView({behavior:'smooth'})"><span class="toc-number">15</span><span class="toc-label">Hedging Use Cases Across the Economy</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s16').scrollIntoView({behavior:'smooth'})"><span class="toc-number">16</span><span class="toc-label">Integrated Scenario Summary</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s17').scrollIntoView({behavior:'smooth'})"><span class="toc-number">17</span><span class="toc-label">What You Can Do About It</span><span class="toc-dots"></span></li>
+    <li class="toc-item" onclick="document.getElementById('s18').scrollIntoView({behavior:'smooth'})"><span class="toc-number">18</span><span class="toc-label">References</span><span class="toc-dots"></span></li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PART I                                      -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="part-divider">
+  <div class="part-divider-label">Part I</div>
+  <div class="part-divider-title">Oil in the Consumer Economy</div>
+</div>
+
+<!-- ══════════ SECTION 1: EXECUTIVE SUMMARY ══════════ -->
+<div class="section" id="s1">
+  <div class="section-number">Section 01</div>
+  <div class="section-title">Executive Summary</div>
+
+  <h3>Key Findings</h3>
+
+  <p>Crude oil is embedded in the cost structure of virtually every sector of the U.S. economy, not merely as a transportation fuel, but as the foundational feedstock for petrochemicals, a critical agricultural input, and the energy source powering global supply chains. With Brent crude trading at $88.13 on Bloomberg as of March 23, 2026, and the Iran conflict threatening further disruption through the Strait of Hormuz, this white paper quantifies the share of final consumer prices attributable to crude oil across major product categories spanning six sectors, models the macroeconomic consequences at escalating price levels, and examines the hedging infrastructure that allows businesses to manage this risk.</p>
+
+  <p>Oil's share of final consumer prices ranges from approximately 3–7% for finished electronics and restaurant meals to over 50–58% for retail gasoline, with most intermediate goods falling in the 8–40% range. These are presented as ranges reflecting estimation uncertainty; a full derivation methodology is provided in Section 3.1. When prices escalate, the macroeconomic damage compounds, though nonlinearly. Using a declining marginal pass-through model (Section 10), our central estimate is that oil at $150/bbl would add approximately 1.7 percentage points to headline CPI (versus 2.2pp under a linear upper-bound model). Net GDP losses, accounting for the offsetting benefit to U.S. energy producers, would range from $260–$320 billion annually, and recession risk would be high based on historical patterns documented by Bloomberg, though significantly dependent on the duration of the shock.</p>
+
+  <p>The energy futures markets, which shattered records on March 6, 2026 with 8.3 million CME energy contracts traded in a single day, provide the mechanism through which airlines, trucking companies, refiners, utilities, farmers, and municipalities attempt to insulate themselves from this shock. Those that hedged before the crisis are temporarily insulated; those that didn't are passing costs directly to consumers. Hedging is not free insurance, it involves real costs and trade-offs detailed in Section 15.7, but for energy-intensive businesses, it is the primary tool available.</p>
+
+  <h3>Oil Price Scenario Summary</h3>
+
+  <div class="scenario-grid">
+    <div class="scenario-card base">
+      <h4>📊 Baseline</h4>
+      <div class="price-range">$75/bbl</div>
+      <div class="desc">Pre-crisis baseline.</div>
+      <div class="impacts">
+        <div class="impact-row"><span class="impact-label">CPI Impact</span><span class="impact-value" style="color:var(--primary)">Baseline</span></div>
+        <div class="impact-row"><span class="impact-label">GDP Impact</span><span class="impact-value" style="color:var(--primary)">Baseline</span></div>
+        <div class="impact-row"><span class="impact-label">Recession Risk</span><span class="impact-value" style="color:var(--primary)">Low</span></div>
+      </div>
+    </div>
+    <div class="scenario-card moderate">
+      <h4>⚠️ Moderate</h4>
+      <div class="price-range">$100/bbl</div>
+      <div class="desc">+0.8pp CPI (central). Net GDP: −0.3% to −0.4%. Elevated risk.</div>
+      <div class="impacts">
+        <div class="impact-row"><span class="impact-label">CPI Impact (central)</span><span class="impact-value" style="color:var(--chart-orange)">+0.8pp</span></div>
+        <div class="impact-row"><span class="impact-label">Net GDP</span><span class="impact-value" style="color:var(--chart-orange)">−0.3% to −0.4%</span></div>
+        <div class="impact-row"><span class="impact-label">Recession Risk</span><span class="impact-value" style="color:var(--chart-orange)">Elevated</span></div>
+      </div>
+    </div>
+    <div class="scenario-card elevated">
+      <h4>🔴 Elevated</h4>
+      <div class="price-range">$125/bbl</div>
+      <div class="desc">+1.3pp CPI (central). Net GDP: −0.7% to −0.8%. Recession likely if sustained 6+ months.</div>
+      <div class="impacts">
+        <div class="impact-row"><span class="impact-label">CPI Impact (central)</span><span class="impact-value" style="color:var(--chart-red)">+1.3pp</span></div>
+        <div class="impact-row"><span class="impact-label">Net GDP</span><span class="impact-value" style="color:var(--chart-red)">−0.7% to −0.8%</span></div>
+        <div class="impact-row"><span class="impact-label">Recession Risk</span><span class="impact-value" style="color:var(--chart-red)">High</span></div>
+      </div>
+    </div>
+    <div class="scenario-card extreme">
+      <h4>🔥 Extreme</h4>
+      <div class="price-range">$150/bbl</div>
+      <div class="desc">+1.7pp CPI (central). Net GDP: −1.0% to −1.2%. Recession highly probable if sustained.</div>
+      <div class="impacts">
+        <div class="impact-row"><span class="impact-label">CPI Impact (central)</span><span class="impact-value" style="color:#8b0000">+1.7pp</span></div>
+        <div class="impact-row"><span class="impact-label">Net GDP</span><span class="impact-value" style="color:#8b0000">−1.0% to −1.2%</span></div>
+        <div class="impact-row"><span class="impact-label">Recession Risk</span><span class="impact-value" style="color:#8b0000">Very High</span></div>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:13px;color:var(--text-light);margin-top:8px;">CPI figures use the nonlinear declining pass-through model (Section 10). GDP figures are net of the domestic producer offset (Section 11.1). Ranges reflect estimation uncertainty. Linear upper-bound CPI estimates: +0.9pp, +1.6pp, +2.2pp respectively.</p>
+</div>
+
+<!-- ══════════ SECTION 2: INTRODUCTION ══════════ -->
+<div class="section" id="s2">
+  <div class="section-number">Section 02</div>
+  <div class="section-title">Introduction and Geopolitical Context</div>
+
+  <p>The relationship between crude oil prices and the broader economy has been a subject of intense study since the 1970s oil shocks, yet the mechanisms through which oil prices transmit into consumer prices remain poorly understood by the general public and frequently underestimated by financial markets. As Bloomberg reported on March 23, 2026, crude oil at $88.13 per barrel reflects a market "singularly focused" on the Strait of Hormuz, the chokepoint through which approximately 20% of global oil supply transits.</p>
+
+  <p>The Forbes newsletter "Why The Iran War Poses Risks To AI" and Bloomberg's coverage of diesel price concerns ("Why Diesel Prices Are the Real Concern for the Economy") both underscore that the economic impact of oil extends far beyond the gasoline pump. Bloomberg's Odd Lots podcast has run multiple episodes documenting how the Iran war is squeezing American farmers, redrawing the natural gas map, and chewing through American missile stockpiles, each a vector through which oil prices ripple into consumer prices.</p>
+
+  <p>The Federal Reserve's March 18, 2026 FOMC statement and accompanying economic projections were released against this backdrop, with Chair Powell's March 21 remarks underscoring the Fed's vigilance regarding energy-driven inflation pass-through. Vice Chair Bowman's March 3 speech on "liquidity resiliency, financial stability, and the role of the Federal Reserve" and Governor Waller's February 23 speech on the economic outlook both addressed the challenge of conducting monetary policy amid energy supply shocks.</p>
+
+  <p>Approximately three-quarters of each barrel of crude oil is refined into transportation fuels that power virtually all mechanized movement of people and goods. The remaining quarter yields petrochemical products serving as feedstocks for plastics, fibers, rubber, fertilizers, pharmaceuticals, and thousands of other materials. This dual role gives crude oil an unparalleled reach across economic sectors, a reach this paper quantifies in granular detail.</p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-value">75<span class="stat-unit">%</span></div>
+      <div class="stat-label">Of each barrel refined into transport fuels</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">6,000<span class="stat-unit">+</span></div>
+      <div class="stat-label">Products made from oil &amp; natural gas</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">20<span class="stat-unit">%</span></div>
+      <div class="stat-label">Global oil supply transits Strait of Hormuz</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">~3<span class="stat-unit"> wks</span></div>
+      <div class="stat-label">Iran War duration as of March 23, 2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 3: METHODOLOGY ══════════ -->
+<div class="section" id="s3">
+  <div class="section-number">Section 03</div>
+  <div class="section-title">Methodology and Analytical Framework</div>
+
+  <p>The oil input cost shares presented in this paper are derived from a composite framework integrating data from the U.S. Energy Information Administration (EIA), International Energy Agency (IEA), Bureau of Labor Statistics (BLS) producer price indices, the Federal Reserve's economic research and DSGE modeling, Goldman Sachs oil-to-CPI elasticity estimates, Forbes economic impact analysis, Bloomberg market data and sector research, and Resilience.org systems analysis.</p>
+
+  <h3>3.1 Oil Cost Share Derivation Methodology</h3>
+
+  <p>The oil input cost shares are derived using a three-layer decomposition for each product category. <strong>Layer 1</strong> captures direct fuel input: the diesel, gasoline, or other petroleum fuel consumed in producing and transporting the product, calculated from industry-average fuel consumption data (EIA, BLS Producer Price Indices) and current fuel prices (Bloomberg, 3/23/2026). <strong>Layer 2</strong> captures petrochemical feedstock: the petroleum-derived material content (plastics, synthetic fibers, chemical inputs), estimated from IEA petrochemical flow data and industry bill-of-materials analyses. <strong>Layer 3</strong> captures embedded transport and energy: the oil cost embedded in upstream supply chain stages, e.g., the diesel consumed transporting fertilizer to a farm, or the fuel cost in delivering raw resin to a packaging plant, estimated from BLS input-output tables and EIA supply chain energy audits.</p>
+
+  <p>For each product, the total oil share equals the sum of these three layers divided by the average retail or wholesale price. Estimates are presented as ranges reflecting data availability and estimation uncertainty. Products where direct EIA or BLS data are available (gasoline, diesel, commodity plastics) carry higher confidence than products requiring composite estimation across multiple layers (cosmetics, restaurant meals). A full derivation workbook is available from the authors on request.</p>
+
+  <h3>3.2 Macroeconomic Modeling</h3>
+
+  <p>For macroeconomic modeling, the paper employs two complementary approaches for inflation pass-through. The Goldman Sachs widely-cited estimate that a sustained 10% oil price rise adds approximately 0.28 percentage points to headline CPI (via Seeking Alpha) is used as the starting-point marginal elasticity. However, recognizing that elasticities estimated for moderate price movements cannot be reliably extrapolated linearly to extreme price levels (see Section 10 for the nonlinear adjustment), we apply a declining marginal pass-through schedule at higher price levels to produce a central estimate, while retaining the linear extrapolation as an upper bound. The Federal Reserve's DSGE model produces a more conservative estimate: roughly +0.15 percentage points to headline PCE inflation for a 10% oil price increase, reflecting the Fed's emphasis on the narrower core transmission mechanism.</p>
+
+  <p>The GDP impact uses Forbes-cited estimates that each $10/barrel oil price increase reduces GDP by approximately 0.2% (roughly $35–50 billion per year), adjusted for the domestic producer offset described in Section 11.1. Recession risk assessments draw on Bloomberg's historical analysis showing that oil price increases of approximately 50% above trend have preceded U.S. recessions, presented as qualitative risk assessments rather than precise probabilities (see Section 12).</p>
+
+  <p>The pass-through elasticity for sector-level analysis uses sector-specific coefficients ranging from 0.30 (high-margin branded consumer products) to 0.90 (commodity products with transparent pricing), replacing the uniform assumption used in earlier drafts. See Section 13 for the full schedule and rationale.</p>
+
+  <div class="callout">
+    <p class="callout-title">Note on Estimates</p>
+    <p>The oil input cost shares are presented as ranges with confidence ratings. Macroeconomic projections use both a central estimate (nonlinear model) and an upper bound (linear model). Actual outcomes will vary based on duration of price shock, monetary policy response, substitution effects, demand destruction dynamics, and the supply-side response detailed in Section 12.2. Market data from Bloomberg as of March 23, 2026.</p>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 4: TRANSPORTATION ══════════ -->
+<div class="section" id="s4">
+  <div class="section-number">Section 04</div>
+  <div class="section-title">Transportation Fuels and Global Mobility</div>
+
+  <p>Transportation represents the most direct channel through which crude oil prices reach consumers. As Bloomberg's coverage highlighted, "Why Diesel Prices Are the Real Concern for the Economy", the impact extends far beyond the gasoline pump to encompass the freight, aviation, and marine shipping networks that move every physical product in the economy.</p>
+
+  <h4>4.1 Gasoline and Personal Mobility</h4>
+  <p>Crude oil costs typically constitute 50–58% of the retail gasoline price (high confidence, direct EIA data), with the remainder split among refining (approximately 14%), distribution and marketing (approximately 12%), and federal/state taxes (approximately 14–19%). Bloomberg reported Trump discussing "really good" talks with Iran partly to calm markets, markets where gasoline futures respond within hours to geopolitical developments.</p>
+
+  <h4>4.2 Diesel and Freight Logistics</h4>
+  <p>Diesel powers the freight backbone: long-haul trucks, delivery vans, locomotives, and shipping. Bloomberg's dedicated reporting on diesel as "the real concern for the economy" reflects that diesel price increases cascade into the cost of every product that moves by truck, train, or ship, which is essentially the entire retail economy. A single cross-country truck load burns approximately 400 gallons of diesel; at even a $1/gallon price increase, that adds $400 per trip, a cost ultimately borne by consumers.</p>
+
+  <h4>4.3 Jet Fuel and Aviation</h4>
+  <p>Airlines face jet fuel as 20–30% of operating costs, with a single carrier consuming billions of gallons per year. Forbes reported LaGuardia crash disruptions alongside ongoing aviation cost pressures, while Bloomberg noted airlines with pre-crisis hedges are significantly better positioned, a divergence that will manifest as fare increases, route cuts, and profitability differences across carriers.</p>
+
+  <h4>4.4 Marine Fuels and International Trade</h4>
+  <p>Bloomberg's Vitol coverage, "Oil Is Market 'Singularly Focused' on Hormuz", underscores that the Strait of Hormuz chokepoint affects not only crude oil supply but the marine fuel costs embedded in all seaborne trade. Approximately 90% of world trade moves by ship; a sustained increase in bunker fuel costs reprices the entire global supply chain.</p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-value">52–58<span class="stat-unit">%</span></div>
+      <div class="stat-label">Gasoline: Oil share of pump price (highest direct exposure)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">20–30<span class="stat-unit">%</span></div>
+      <div class="stat-label">Airline: Fuel share of operating costs</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">400<span class="stat-unit"> gal</span></div>
+      <div class="stat-label">Per cross-country truck load diesel burn</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">90<span class="stat-unit">%</span></div>
+      <div class="stat-label">World trade moves by sea (bunker fuel dependent)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 5: PETROCHEMICALS ══════════ -->
+<div class="section" id="s5">
+  <div class="section-number">Section 05</div>
+  <div class="section-title">Petrochemicals, Plastics, and Manufactured Goods</div>
+
+  <p>Crude oil serves as the foundational feedstock for the petrochemical industry, producing the building blocks of plastics, synthetic fibers, rubber, solvents, fertilizers, pharmaceuticals, and thousands of other materials. The IEA has identified petrochemicals as the fastest-growing source of global oil demand.</p>
+
+  <p>The petrochemical value chain begins when crude oil is refined and a fraction, primarily naphtha and ethane, is "cracked" to yield ethylene, propylene, butadiene, and benzene. These are polymerized into plastics (PE, PP, PVC, polystyrene), fibers (polyester, nylon), rubber (SBR), and specialty chemicals for detergents, paints, adhesives, cosmetics, and pharmaceuticals.</p>
+
+  <div class="chart-container">
+    <div class="chart-title">Crude Oil Input Cost as % of Final Price — Petrochemical Products</div>
+    <div class="chart-caption">At $88/bbl. Includes direct feedstock, energy, and embedded transport costs. Hover for details.</div>
+    <div class="bar-chart" id="petroBars">
+      <div class="bar-row" data-info="Commodity Plastics (resin)|45–55%|High confidence"><span class="bar-label">Commodity Plastics (resin)</span><div class="bar-track"><div class="bar-fill c1" style="width:50%"><span>45–55%</span></div></div></div>
+      <div class="bar-row" data-info="PVC Pipes|30–40%|Medium-High confidence"><span class="bar-label">PVC Pipes</span><div class="bar-track"><div class="bar-fill c2" style="width:35%"><span>30–40%</span></div></div></div>
+      <div class="bar-row" data-info="Fertilizers|30–40%|Medium confidence"><span class="bar-label">Fertilizers</span><div class="bar-track"><div class="bar-fill c2" style="width:35%"><span>30–40%</span></div></div></div>
+      <div class="bar-row" data-info="Food Packaging|25–35%|Medium confidence"><span class="bar-label">Food Packaging</span><div class="bar-track"><div class="bar-fill c3" style="width:30%"><span>25–35%</span></div></div></div>
+      <div class="bar-row" data-info="Insulation Foam|23–32%|Medium confidence"><span class="bar-label">Insulation Foam</span><div class="bar-track"><div class="bar-fill c4" style="width:28%"><span>23–32%</span></div></div></div>
+      <div class="bar-row" data-info="Synthetic Rubber / Tires|21–30%|Medium confidence"><span class="bar-label">Synthetic Rubber / Tires</span><div class="bar-track"><div class="bar-fill c4" style="width:26%"><span>21–30%</span></div></div></div>
+      <div class="bar-row" data-info="Paints & Coatings|14–22%|Medium confidence"><span class="bar-label">Paints &amp; Coatings</span><div class="bar-track"><div class="bar-fill c6" style="width:18%"><span>14–22%</span></div></div></div>
+      <div class="bar-row" data-info="Synthetic Fibers|10–18%|Medium confidence"><span class="bar-label">Synthetic Fibers</span><div class="bar-track"><div class="bar-fill c6" style="width:14%"><span>10–18%</span></div></div></div>
+      <div class="bar-row" data-info="Detergents|8–15%|Low-Medium confidence"><span class="bar-label">Detergents</span><div class="bar-track"><div class="bar-fill c7" style="width:12%"><span>8–15%</span></div></div></div>
+      <div class="bar-row" data-info="Finished Plastic Goods|8–15%|Low-Medium confidence"><span class="bar-label">Finished Plastic Goods</span><div class="bar-track"><div class="bar-fill c7" style="width:12%"><span>8–15%</span></div></div></div>
+      <div class="bar-row" data-info="Cosmetics|6–12%|Low-Medium confidence"><span class="bar-label">Cosmetics</span><div class="bar-track"><div class="bar-fill c8" style="width:9%"><span>6–12%</span></div></div></div>
+      <div class="bar-row" data-info="Pharmaceuticals|5–10%|Low-Medium confidence"><span class="bar-label">Pharmaceuticals</span><div class="bar-track"><div class="bar-fill c8" style="width:8%"><span>5–10%</span></div></div></div>
+      <div class="bar-row" data-info="Medical Devices|4–9%|Low confidence"><span class="bar-label">Medical Devices</span><div class="bar-track"><div class="bar-fill c5" style="width:7%"><span>4–9%</span></div></div></div>
+    </div>
+    <p style="font-size:12px;color:var(--text-light);margin-top:14px;">Sources: IEA petrochemical outlook, EIA, industry cost analyses. Higher-value products show lower oil share due to R&D, marketing, and labor costs. Confidence ratings reflect data availability; see Section 3.1.</p>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 6: AGRICULTURE ══════════ -->
+<div class="section" id="s6">
+  <div class="section-number">Section 06</div>
+  <div class="section-title">Agriculture and Food Supply</div>
+
+  <p>Bloomberg's Odd Lots podcast episode "War in Iran Squeezes America's Farmers Again" documents how the agriculture sector faces oil exposure through multiple reinforcing channels: diesel for farm machinery, petroleum-derived fertilizers and pesticides, energy-intensive food processing, plastic packaging, and refrigerated transport. Bloomberg separately reported "How Iran War Is Disrupting the Food Supply Chain," noting that for every calorie of food consumed in the United States, significant fossil fuel energy is expended in its production and delivery, a widely cited ratio in agricultural energy research, though exact figures vary by product and methodology.</p>
+
+  <div class="chart-container">
+    <div class="chart-title">Crude Oil Input Cost as % of Final Price — Food and Agriculture</div>
+    <div class="chart-caption">At $88/bbl. Aggregates fuel, fertilizer, packaging, and transport channels.</div>
+    <div class="bar-chart" id="agriBars">
+      <div class="bar-row" data-info="Food Packaging (plastic)|25–35%|Medium confidence"><span class="bar-label">Food Packaging (plastic)</span><div class="bar-track"><div class="bar-fill c1" style="width:30%"><span>25–35%</span></div></div></div>
+      <div class="bar-row" data-info="Grain (farm gate)|14–22%|Medium confidence"><span class="bar-label">Grain (farm gate)</span><div class="bar-track"><div class="bar-fill c2" style="width:18%"><span>14–22%</span></div></div></div>
+      <div class="bar-row" data-info="Food Transport|11–19%|Medium confidence"><span class="bar-label">Food Transport</span><div class="bar-track"><div class="bar-fill c3" style="width:15%"><span>11–19%</span></div></div></div>
+      <div class="bar-row" data-info="Packaged Food|8–12%|Medium confidence"><span class="bar-label">Packaged Food</span><div class="bar-track"><div class="bar-fill c4" style="width:10%"><span>8–12%</span></div></div></div>
+      <div class="bar-row" data-info="Meat (retail)|6–10%|Medium confidence"><span class="bar-label">Meat (retail)</span><div class="bar-track"><div class="bar-fill c6" style="width:8%"><span>6–10%</span></div></div></div>
+      <div class="bar-row" data-info="Fresh Produce|5–9%|Low-Medium confidence"><span class="bar-label">Fresh Produce</span><div class="bar-track"><div class="bar-fill c7" style="width:7%"><span>5–9%</span></div></div></div>
+      <div class="bar-row" data-info="Dairy|4–8%|Low-Medium confidence"><span class="bar-label">Dairy</span><div class="bar-track"><div class="bar-fill c8" style="width:6%"><span>4–8%</span></div></div></div>
+      <div class="bar-row" data-info="Restaurant Meal|3–6%|Low confidence"><span class="bar-label">Restaurant Meal</span><div class="bar-track"><div class="bar-fill c5" style="width:5%"><span>3–6%</span></div></div></div>
+    </div>
+    <p style="font-size:12px;color:var(--text-light);margin-top:14px;">Source: USDA ERS food dollar series, EIA, Bloomberg reporting. Confidence ratings reflect estimation methodology; see Section 3.1.</p>
+  </div>
+
+  <div class="callout-orange callout">
+    <p class="callout-title">⚠ Food Supply Chain Note</p>
+    <p>Bloomberg reports that the Iran war is already disrupting food supply chains through higher diesel, fertilizer, and transport costs. Natural gas, the primary feedstock for ammonia-based fertilizers, moves in near-lockstep with oil markets. The current energy shock is expected to push fertilizer costs significantly higher for the 2026–2027 growing season, with downstream food price effects persisting long after oil markets stabilize.</p>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 7: CONSTRUCTION ══════════ -->
+<div class="section" id="s7">
+  <div class="section-number">Section 07</div>
+  <div class="section-title">Construction and Infrastructure</div>
+
+  <p>Construction faces crude oil exposure from three directions simultaneously: diesel fuel for heavy equipment, asphalt (a direct petroleum residue) for roads and surfaces, and petrochemical building materials including PVC, insulation foam, roofing, paints, sealants, and adhesives. Forbes reported that Trump is requesting $200 billion more for the Iran war, funds that could otherwise have supported domestic infrastructure investment now facing oil-driven cost inflation.</p>
+
+  <div class="chart-container">
+    <div class="chart-title">Crude Oil Input Cost as % of Final Price — Construction and Infrastructure</div>
+    <div class="chart-caption">At $88/bbl. Includes fuel, asphalt, and petrochemical material channels.</div>
+    <div class="bar-chart" id="conBars">
+      <div class="bar-row" data-info="Asphalt / Road Paving|36–48%|Medium-High confidence"><span class="bar-label">Asphalt / Road Paving</span><div class="bar-track"><div class="bar-fill c1" style="width:42%"><span>36–48%</span></div></div></div>
+      <div class="bar-row" data-info="PVC Pipes|30–40%|Medium-High confidence"><span class="bar-label">PVC Pipes</span><div class="bar-track"><div class="bar-fill c2" style="width:35%"><span>30–40%</span></div></div></div>
+      <div class="bar-row" data-info="Heavy Equipment Fuel|26–36%|Medium-High confidence"><span class="bar-label">Heavy Equipment Fuel</span><div class="bar-track"><div class="bar-fill c3" style="width:31%"><span>26–36%</span></div></div></div>
+      <div class="bar-row" data-info="Insulation Foam|23–32%|Medium confidence"><span class="bar-label">Insulation Foam</span><div class="bar-track"><div class="bar-fill c4" style="width:28%"><span>23–32%</span></div></div></div>
+      <div class="bar-row" data-info="Roofing|18–27%|Medium confidence"><span class="bar-label">Roofing</span><div class="bar-track"><div class="bar-fill c6" style="width:23%"><span>18–27%</span></div></div></div>
+      <div class="bar-row" data-info="Materials Transport|17–25%|Medium confidence"><span class="bar-label">Materials Transport</span><div class="bar-track"><div class="bar-fill c6" style="width:21%"><span>17–25%</span></div></div></div>
+      <div class="bar-row" data-info="Paints / Adhesives|14–22%|Medium confidence"><span class="bar-label">Paints / Adhesives</span><div class="bar-track"><div class="bar-fill c7" style="width:18%"><span>14–22%</span></div></div></div>
+      <div class="bar-row" data-info="Residential Build|8–14%|Low-Medium confidence"><span class="bar-label">Residential Build</span><div class="bar-track"><div class="bar-fill c8" style="width:11%"><span>8–14%</span></div></div></div>
+    </div>
+    <p style="font-size:12px;color:var(--text-light);margin-top:14px;">Source: FHWA cost indices, RS Means, EIA data. Road construction/maintenance budgets are among the most oil-price-sensitive public expenditure categories.</p>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 8: CONSUMER GOODS ══════════ -->
+<div class="section" id="s8">
+  <div class="section-number">Section 08</div>
+  <div class="section-title">Consumer Goods, Services, and Broader Impacts</div>
+
+  <p>The average American household is surrounded by oil derivatives: plastics in electronics, synthetic fibers in clothing, petroleum-based cosmetics and cleaning products. Bloomberg reported rising consumer anxiety, "Consumers Are Paying the Price for the 'Strategic Trap' of War in Iran", while Forbes noted that Trump's approval rating remains stable even as a majority of Americans oppose the war, suggesting growing economic discontent as oil-driven price increases erode purchasing power.</p>
+
+  <p>Service sectors face oil exposure through fuel costs embedded in delivery, commuting, and operations. Ride-sharing, food delivery, public transit, waste hauling, and last-mile logistics all pass through higher fuel costs. Bloomberg's coverage of "Worried About Job Security?" and Forbes's reporting on "The Job Market Is Sending Mixed Messages" both reflect an economy where oil-driven input costs are compressing margins and forcing difficult decisions about employment, pricing, and service levels.</p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-value" style="font-size:20px;">3–7% <span style="font-size:14px;color:var(--text-light);">to</span> 8–15%</div>
+      <div class="stat-label">Consumer Goods oil share range (electronics to housewares)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value" style="font-size:22px;">8–18<span class="stat-unit">%</span></div>
+      <div class="stat-label">Textiles &amp; Apparel oil share range (synthetic fiber + transport)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value" style="font-size:22px;">5–22<span class="stat-unit">%</span></div>
+      <div class="stat-label">Services oil share range (delivery, transit, waste hauling)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">3–4<span class="stat-unit"> MPG</span></div>
+      <div class="stat-label">Garbage trucks (most fuel-intensive vehicles on the road)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 9: CROSS-SECTOR SUMMARY ══════════ -->
+<div class="section" id="s9">
+  <div class="section-number">Section 09</div>
+  <div class="section-title">Cross-Sector Summary and Composite Analysis</div>
+  <div class="section-subtitle">Table 1. Estimated Crude Oil Share of Final Consumer Price by Sector</div>
+
+  <div class="data-table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr><th>Sector / Product</th><th>Oil Share (Range)</th><th>Confidence</th><th>Primary Transmission Channel</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Gasoline (retail)</td><td class="num">52–58%</td><td>High</td><td>Crude → refining → pump price</td></tr>
+        <tr><td>Diesel / Trucking Fuel</td><td class="num">50–56%</td><td>High</td><td>Crude → refining → freight cascade</td></tr>
+        <tr><td>Commodity Plastics (resin)</td><td class="num">45–55%</td><td>High</td><td>Crude → naphtha → ethylene → PE/PP</td></tr>
+        <tr><td>Asphalt / Road Construction</td><td class="num">36–48%</td><td>Med-High</td><td>Crude residuum → bitumen + diesel</td></tr>
+        <tr><td>PVC Pipes &amp; Fittings</td><td class="num">30–40%</td><td>Med-High</td><td>Crude → ethylene → VCM → PVC</td></tr>
+        <tr><td>Marine Shipping Fuel</td><td class="num">30–40%</td><td>Med-High</td><td>Crude → bunker fuel → trade costs</td></tr>
+        <tr><td>Fertilizers (nitrogen)</td><td class="num">30–40%</td><td>Medium</td><td>Natural gas (oil-linked) → ammonia</td></tr>
+        <tr><td>Heavy Equipment Fuel</td><td class="num">26–36%</td><td>Med-High</td><td>Diesel → construction/mining ops</td></tr>
+        <tr><td>Food Packaging (plastic)</td><td class="num">25–35%</td><td>Medium</td><td>Crude → polyethylene film</td></tr>
+        <tr><td>Jet Fuel / Airfares</td><td class="num">24–34%</td><td>Med-High</td><td>Crude → refining → airline cost</td></tr>
+        <tr><td>Insulation Foam</td><td class="num">23–32%</td><td>Medium</td><td>Crude → MDI/polyol → foam</td></tr>
+        <tr><td>Tires / Synthetic Rubber</td><td class="num">21–30%</td><td>Medium</td><td>Crude → butadiene/styrene → SBR</td></tr>
+        <tr><td>Roofing (shingles)</td><td class="num">18–27%</td><td>Medium</td><td>Crude → bitumen + fiberglass</td></tr>
+        <tr><td>Ride-sharing / Delivery</td><td class="num">17–26%</td><td>Medium</td><td>Gasoline/diesel → driver fuel</td></tr>
+        <tr><td>Materials Transport</td><td class="num">17–25%</td><td>Medium</td><td>Diesel → trucking bldg materials</td></tr>
+        <tr><td>Public Transit (bus)</td><td class="num">15–23%</td><td>Medium</td><td>Diesel/CNG → transit ops</td></tr>
+        <tr><td>Grain (farm gate)</td><td class="num">14–22%</td><td>Medium</td><td>Diesel + fertilizer + chemicals</td></tr>
+        <tr><td>Paints &amp; Coatings</td><td class="num">14–22%</td><td>Medium</td><td>Crude → solvents/resins</td></tr>
+        <tr><td>Food Transport (avg)</td><td class="num">11–19%</td><td>Medium</td><td>Diesel → refrigerated truck/rail</td></tr>
+        <tr><td>Synthetic Fibers/Textiles</td><td class="num">10–18%</td><td>Medium</td><td>Crude → PTA/MEG → polyester</td></tr>
+        <tr><td>Finished Plastic Goods</td><td class="num">8–15%</td><td>Low-Med</td><td>Resin + energy + transport</td></tr>
+        <tr><td>Detergents &amp; Cleaning</td><td class="num">8–15%</td><td>Low-Med</td><td>Crude → surfactants + bottles</td></tr>
+        <tr><td>Residential Construction</td><td class="num">8–14%</td><td>Low-Med</td><td>Diesel + PVC + insulation</td></tr>
+        <tr><td>Packaged/Processed Food</td><td class="num">8–12%</td><td>Medium</td><td>Fuel + fert + packaging</td></tr>
+        <tr><td>Cosmetics/Personal Care</td><td class="num">6–12%</td><td>Low-Med</td><td>Petroleum derivatives + plastic</td></tr>
+        <tr><td>Meat (retail)</td><td class="num">6–10%</td><td>Medium</td><td>Feed + processing + transport</td></tr>
+        <tr><td>Pharmaceuticals</td><td class="num">5–10%</td><td>Low-Med</td><td>Petrochemical + plastic pkg</td></tr>
+        <tr><td>Fresh Produce (retail)</td><td class="num">5–9%</td><td>Medium</td><td>Farm diesel + refrig transport</td></tr>
+        <tr><td>Dairy Products</td><td class="num">4–8%</td><td>Medium</td><td>Farm diesel + processing</td></tr>
+        <tr><td>Restaurant Meal</td><td class="num">3–6%</td><td>Low</td><td>Ingredient transport + energy</td></tr>
+        <tr><td>Electronics (consumer)</td><td class="num">3–7%</td><td>Low</td><td>Plastic + energy + shipping</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:12px;color:var(--text-light);">Estimates are ranges derived from the three-layer methodology in Section 3.1 at $88/bbl baseline. Confidence ratings: High = direct EIA/BLS data, uncertainty ±5–10% of midpoint. Medium = composite estimate, ±15–25%. Low = multi-layer composite, ±30–50%. Market data: Bloomberg 3/23/2026. Full derivation workbook available on request.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PART II                                     -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="part-divider">
+  <div class="part-divider-label">Part II</div>
+  <div class="part-divider-title">Macroeconomic Impact — Inflation, GDP, and Recession Risk</div>
+</div>
+
+<!-- ══════════ SECTION 10: INFLATION ══════════ -->
+<div class="section" id="s10">
+  <div class="section-number">Section 10</div>
+  <div class="section-title">Inflation Transmission: CPI and PCE Effects</div>
+
+  <p>Higher oil prices pass through quickly to consumer inflation through both direct channels (gasoline, heating fuel) and indirect channels (transportation costs embedded in all goods, petrochemical feedstock costs, energy-intensive manufacturing). Two authoritative estimates bracket the magnitude of this pass-through.</p>
+
+  <p>Goldman Sachs estimates (via Seeking Alpha) that a sustained 10% oil price rise adds approximately 0.28 percentage points to headline CPI, a widely-cited elasticity that captures both direct and indirect channels. The Federal Reserve's own DSGE model produces a more conservative estimate: roughly +0.15 percentage points to headline PCE inflation for a 10% oil price increase, reflecting the Fed's emphasis on the narrower core transmission mechanism. The March 18, 2026 FOMC statement and economic projections were formulated with these dynamics explicitly in view.</p>
+
+  <h3>10.1 Nonlinear Pass-Through Adjustment</h3>
+
+  <p>The Goldman Sachs elasticity was estimated for moderate price movements within historical trading ranges. Academic literature (Hamilton, 2003; Kilian, 2009; Baumeister &amp; Kilian, 2016) consistently finds that pass-through rates decline at extreme price levels due to demand destruction (consumers reduce driving, defer purchases), substitution effects (businesses switch to alternative inputs), margin absorption (retailers absorb cost increases rather than lose customers), and contractionary policy response (Fed tightening reduces aggregate demand, limiting firms' pricing power).</p>
+
+  <p>We apply a declining pass-through schedule that reduces the marginal CPI elasticity by approximately 15% for each successive $25 increment above baseline, reflecting these well-documented nonlinearities. The linear extrapolation is retained as an upper bound.</p>
+
+  <div class="data-table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr><th>Price Level</th><th>CPI Add (Central)</th><th>CPI Add (Linear Upper)</th><th>PCE Add (Fed DSGE)</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row"><td><strong>$75 (Baseline)</strong></td><td class="num">+0.0pp</td><td class="num">+0.0pp</td><td class="num">+0.0pp</td><td>Baseline</td></tr>
+        <tr><td>$100 (+33%)</td><td class="num negative">+0.8pp</td><td class="num negative">+0.9pp</td><td class="num">+0.5pp</td><td>Noticeable food/fuel inflation</td></tr>
+        <tr><td>$125 (+67%)</td><td class="num negative">+1.3pp</td><td class="num negative">+1.6pp</td><td class="num">+0.9pp</td><td>Broad-based price pressure</td></tr>
+        <tr><td>$150 (+100%)</td><td class="num negative">+1.7pp</td><td class="num negative">+2.2pp</td><td class="num">+1.2pp</td><td>Fed policy dilemma intensifies</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:12px;color:var(--text-light);">Sources: Goldman Sachs (10% oil → +0.28pp CPI, via Seeking Alpha); Federal Reserve DSGE model (10% oil → +0.15pp PCE); nonlinear adjustment based on Hamilton (2003), Kilian (2009), and Baumeister &amp; Kilian (2016). Cumulative from $75 baseline. Bloomberg crude prices.</p>
+
+  <div class="callout">
+    <p class="callout-title">Key Finding</p>
+    <p>At the current Bloomberg price of $88.13/bbl (roughly 17% above a $75 baseline), the Goldman Sachs model implies approximately +0.5pp added to CPI. If the Iran conflict drives crude to $125, CPI would absorb approximately 1.3–1.6 additional percentage points (central to upper bound), significantly complicating the Federal Reserve's inflation mandate as expressed in the March 18 FOMC statement.</p>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 11: GDP IMPACT ══════════ -->
+<div class="section" id="s11">
+  <div class="section-number">Section 11</div>
+  <div class="section-title">GDP Impact and Economic Cost</div>
+
+  <p>Higher oil prices subtract from GDP through reduced consumer spending power, higher business input costs, compressed margins, and the contractionary monetary policy response that energy-driven inflation may compel. Forbes-cited research estimates that each $10/barrel oil price increase reduces GDP by approximately 0.2%, or roughly $35–50 billion per year in the current economy, a rule-of-thumb broadly consistent with academic estimates (Hamilton, 2003) and historical experience.</p>
+
+  <p>Bloomberg's reporting on "China's Record Deflation Finds Dangerous Cure in Oil Shock" and Israel's disclosure that its economy lost over $57 billion during two years of conflict both illustrate the GDP destruction that energy and geopolitical shocks produce, effects now playing out globally as the Iran conflict enters its third week.</p>
+
+  <h3>11.1 The Net Producer Offset</h3>
+  <div class="section-subtitle">Why the U.S. GDP Impact Is Smaller Than It Appears</div>
+
+  <p>A critical nuance is that the United States has been a net exporter of petroleum products since approximately 2019 and a net total energy exporter since 2020 (EIA). This fundamentally changes the macroeconomic calculus compared to the 1970s and 1980s, when the U.S. was heavily import-dependent.</p>
+
+  <p>Higher oil prices generate significant offsetting economic benefits within the U.S.: increased revenue for domestic producers (Permian Basin, Bakken, Eagle Ford), accelerated drilling capital expenditure, job creation in energy-producing states, and higher federal and state royalty revenues. Academic estimates (Kilian, 2009; Herrera &amp; Pesavento, 2009) suggest the net GDP drag for a net energy exporter may be 30–50% lower than the gross consumer-side impact, as producer-side gains partially offset consumer-side losses.</p>
+
+  <p>The net GDP impact remains negative because the consumer-side drag (affecting all 330 million Americans) outweighs the producer-side benefit (concentrated in energy-sector workers and shareholders). However, the net effect is materially smaller than gross figures suggest. Distributional effects are also important: energy-producing regions may experience boom conditions while energy-consuming regions experience cost-driven contraction.</p>
+
+  <div class="data-table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr><th>Price Level</th><th>Gross GDP Loss</th><th>Net GDP Loss (after offset)</th><th>Net % GDP Drag</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row"><td><strong>$75 (Base)</strong></td><td class="num">$0</td><td class="num">$0</td><td class="num">0%</td></tr>
+        <tr><td>$100</td><td class="num negative">−$130B/yr (−0.5%)</td><td class="num negative">−$80B to −$105B</td><td class="num negative">−0.3% to −0.4%</td></tr>
+        <tr><td>$125</td><td class="num negative">−$260B/yr (−1.0%)</td><td class="num negative">−$180B to −$210B</td><td class="num negative">−0.7% to −0.8%</td></tr>
+        <tr><td>$150</td><td class="num negative">−$400B/yr (−1.5%)</td><td class="num negative">−$260B to −$320B</td><td class="num negative">−1.0% to −1.2%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:12px;color:var(--text-light);">Source: Forbes ($10/bbl → ≈0.2% GDP, ~$35–50B/yr); producer offset estimated at 30–50% based on Kilian (2009). GDP base: ~$27 trillion. Net estimates reflect U.S. net energy exporter status as of 2020 (EIA).</p>
+</div>
+
+<!-- ══════════ SECTION 12: RECESSION RISK ══════════ -->
+<div class="section" id="s12">
+  <div class="section-number">Section 12</div>
+  <div class="section-title">Recession Risk, Duration, and Structural Context</div>
+
+  <h3>12.1 Historical Pattern and Risk Assessment</h3>
+
+  <p>Bloomberg's historical analysis documents that oil price increases of approximately 50% or more above trend have preceded U.S. recessions in 1973, 1979, 1990, and 2008, a four-for-four record that makes this threshold analytically significant. However, each recession involved significant co-factors: the 1973 recession coincided with the collapse of Bretton Woods and price controls; 1979 with aggressive Fed tightening under Volcker; 1990 with the S&amp;L crisis; and 2008 with the subprime mortgage collapse. Oil was a contributing cause in each case but not the sole cause.</p>
+
+  <p>Rather than assign precise probabilities, which would require a calibrated model beyond the scope of this paper, we assess recession risk qualitatively against historical precedent:</p>
+
+  <div class="data-table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr><th>Price Level</th><th>Risk Rating</th><th>Assessment</th><th>Historical Analogue</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row"><td><strong>$75 (Base)</strong></td><td><span style="color:var(--chart-green);font-weight:700;">LOW</span></td><td>Consistent with trend growth</td><td>2017–2019</td></tr>
+        <tr><td>$88 (Current)</td><td><span style="color:var(--chart-green);font-weight:700;">LOW-MODERATE</span></td><td>Manageable inflation drag; below historical danger zone</td><td>2011–2014</td></tr>
+        <tr><td>$100 (+33%)</td><td><span style="color:var(--chart-orange);font-weight:700;">MODERATE</span></td><td>Growth slows; recession not typical at this level absent other shocks</td><td>Late 2007 approach</td></tr>
+        <tr><td>$112 (+50%)</td><td><span style="color:var(--chart-orange);font-weight:700;">ELEVATED</span></td><td>Crosses the historical threshold that has preceded every post-1970 energy-shock recession</td><td>1990 (Iraq/Kuwait)</td></tr>
+        <tr><td>$125 (+67%)</td><td><span style="color:var(--chart-red);font-weight:700;">HIGH</span></td><td>Well above threshold; recession likely unless shock is brief (&lt;3 months)</td><td>2007–2008 approach</td></tr>
+        <tr><td>$150 (+100%)</td><td><span style="color:#8b0000;font-weight:700;">VERY HIGH</span></td><td>Consistent with recession onset in every modern precedent</td><td>2008 peak</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:12px;color:var(--text-light);">These are qualitative assessments based on historical pattern-matching, not outputs of a probabilistic model. The historical record is small (n=4 energy-shock recessions since 1970), and each episode involved additional macroeconomic vulnerabilities.</p>
+
+  <h3>12.2 Supply-Side Response and Price Self-Correction</h3>
+
+  <p>The scenario analysis in this paper holds supply constant, modeling only the demand-side consequences of price increases. In reality, higher prices trigger significant supply responses that historically moderate and reverse oil price spikes.</p>
+
+  <p>U.S. shale production is highly price-responsive. At $80+ WTI, Permian Basin operators accelerate drilling programs. At $100+, DUC (drilled-but-uncompleted) wells are brought online within weeks, and new drilling can add meaningful production within 4–6 months. The EIA estimates that U.S. tight oil production can increase by 500,000–1,000,000 barrels per day within 12 months of sustained $100+ pricing. OPEC spare capacity, estimated at 3–5 million barrels per day as of early 2026, concentrated in Saudi Arabia and the UAE, could be deployed to offset supply disruptions. Strategic petroleum reserves, Bloomberg reported that Energy Secretary Wright confirmed SPR releases began flowing on March 21, 2026, provide an additional emergency buffer.</p>
+
+  <p>These supply responses mean that the $125 and $150 scenarios are more likely to be transitory spikes (weeks to months) than sustained plateaus (years). The most probable path for a Hormuz disruption scenario is a sharp spike followed by partial retracement as supply responses materialize, rather than a permanent step-change. This does not eliminate the risk, a severe disruption could overwhelm supply responses for months, and even temporary spikes cause real economic damage, but it means the "sustained $150" scenario should be understood as a tail risk, not a central case.</p>
+
+  <h3>12.3 Duration Matters: Transitory Spikes vs. Sustained Plateaus</h3>
+
+  <p>The macroeconomic impact of an oil price shock depends critically on its duration. A three-month spike to $125/bbl has vastly different consequences than two years of sustained $125 oil.</p>
+
+  <p>Historical precedent is instructive: the 1990 Gulf War spike (oil roughly doubled) lasted approximately 4 months before retracing; the 2008 spike ($70 to $147) lasted approximately 7 months before collapsing; the 2011–2014 plateau ($90–$110) lasted roughly 3 years but involved a gradual rise rather than a shock. For the current Iran conflict:</p>
+
+  <div class="data-table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr><th>Duration</th><th>Price Range</th><th>GDP Impact</th><th>Inflation</th><th>Recession Risk</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Short (1–3 months)</strong></td><td>$100–$125 spike</td><td class="num">−0.2 to −0.4% ann.</td><td>Transitory</td><td>Unlikely from oil alone</td></tr>
+        <tr><td><strong>Medium (3–9 months)</strong></td><td>$100–$120 sustained</td><td class="num negative">−0.5 to −0.8%</td><td>Embedded in expectations</td><td>Rises meaningfully</td></tr>
+        <tr><td><strong>Extended (9+ months)</strong></td><td>$110+ sustained</td><td class="num negative">Full Section 11 scenarios apply</td><td>Persistent</td><td>Probable</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The hedging implications differ sharply across these scenarios (see Section 15): short-duration spikes favor options strategies (which provide insurance without locking in costs), while extended durations favor fixed-price structures that provide certainty.</p>
+
+  <h3>12.4 Declining Oil Intensity</h3>
+  <div class="section-subtitle">Why the Economy Is Less Vulnerable Than Historical Precedent Suggests</div>
+
+  <p>The U.S. economy consumes significantly less oil per dollar of GDP than during previous oil shock episodes. Oil intensity (barrels consumed per million dollars of real GDP) has fallen by approximately 50% since 1973 and by roughly 25% since 2000 (EIA data). This structural decline reflects vehicle fleet fuel efficiency improvements (CAFE standards), growth of the service and digital economy relative to manufacturing, electrification of heating, increasing renewable electricity generation (now approximately 22% of U.S. power), and a growing EV fleet (approximately 9% of new vehicle sales in 2025).</p>
+
+  <p>This means that a given oil price increase produces a smaller GDP drag and CPI impact today than the same price increase would have produced in 1979 or even 2008. The Goldman Sachs CPI elasticity already partially reflects this reduced intensity (it is a contemporary estimate), but the historical recession analogies in Section 12.1, which reference the 1973, 1979, and 2008 episodes, may overstate vulnerability by drawing on an era of higher oil dependence.</p>
+
+  <div class="callout-red callout">
+    <p class="callout-title">⚠ Current Risk Level</p>
+    <p>At the March 23, 2026 Bloomberg price of $88.13/bbl, the economy is approximately 17% above the $75 baseline, within the "low-moderate risk" zone. Bloomberg reports that markets remain "singularly focused" on Hormuz, and Trump's negotiation window with Iran creates binary risk: successful de-escalation could return prices toward $75, while failure or escalation could push prices rapidly through $100 toward $125+, approaching the historical recession-trigger threshold. However, supply-side responses (Section 12.2), declining oil intensity (Section 12.4), and the U.S. net producer offset (Section 11.1) all provide structural buffers that did not exist in earlier oil shock episodes. Duration (Section 12.3) will ultimately determine whether a spike becomes a sustained drag.</p>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 13: CASCADING EFFECTS ══════════ -->
+<div class="section" id="s13">
+  <div class="section-number">Section 13</div>
+  <div class="section-title">Cascading Effects, Feedback Loops, and Systemic Risk</div>
+
+  <p>The sector-by-sector and macroeconomic analyses above treat each channel independently. In reality, oil price shocks generate compounding feedback loops that amplify total impact beyond the sum of individual sector effects.</p>
+
+  <p>Consider the following cascade:</p>
+
+  <div class="flow-diagram">
+    <div class="flow-node accent-node">Crude Oil<br>Price ↑</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-node">Diesel<br>Fuel ↑</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-node">Fertilizer<br>Transport ↑</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-node">Corn<br>Cost ↑</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-node">Animal<br>Feed ↑</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-node">Meat<br>Prices ↑</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-node accent-node">Retail<br>Food ↑</div>
+  </div>
+
+  <p>A rise in crude oil prices increases diesel fuel costs, which raises the price of transporting nitrogen fertilizer from plant to farm. Higher fertilizer delivered cost, combined with higher farm diesel, increases corn production cost. Higher corn prices raise animal feed costs, increasing beef, poultry, and dairy production costs. Higher livestock costs, combined with higher refrigerated transport, increase wholesale meat prices. Supermarkets, facing higher energy for refrigeration and higher distribution fleet fuel costs, pass through increases to retail. Consumers facing higher groceries may demand higher wages, raising labor costs for restaurants, processors, and retailers, creating a secondary price wave.</p>
+
+  <p>Quantifying this amplification precisely would require a full input-output model beyond the scope of this paper. Academic research on production network effects (Acemoglu et al., 2012, "The Network Origins of Aggregate Fluctuations," <em>Econometrica</em>; Baqaee &amp; Farhi, 2019, "The Macroeconomic Impact of Microeconomic Shocks," <em>Econometrica</em>) demonstrates that supply chain network effects amplify first-round commodity price shocks, with the magnitude depending on the commodity's network centrality and the number of production stages. Petroleum is unusually central in the production network due to its dual role as energy source and feedstock. The first-order estimates in Table 1 likely understate total consumer price impact by some margin due to these cascading effects, but we do not assign a specific amplification factor given the absence of a calibrated model for the current shock.</p>
+
+  <p>Bloomberg's "Odd Lots: The Chokepoint to End All Chokepoints" newsletter captures this systemic risk precisely, the Strait of Hormuz is not merely an oil chokepoint but a chokepoint for the entire global economic system built on petroleum flows.</p>
+
+  <h3>Simulated Consumer Price Impact — Oil at $150 vs. $75 Baseline</h3>
+  <p style="font-size:13px;color:var(--text-light);margin-bottom:12px;">Sector-specific pass-through rates applied. See notes below for methodology.</p>
+
+  <div class="data-table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr><th>Product</th><th>Oil Share (mid)</th><th>Pass-Through</th><th>Rationale</th><th>Est. Price ↑</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Gasoline (retail)</td><td class="num">55%</td><td class="num">0.90</td><td>Commodity, transparent pricing</td><td class="num negative">+49.5%</td></tr>
+        <tr><td>Diesel / Trucking Fuel</td><td class="num">53%</td><td class="num">0.85</td><td>Near-commodity, surcharges contractual</td><td class="num negative">+45.1%</td></tr>
+        <tr><td>Commodity Plastics (resin)</td><td class="num">50%</td><td class="num">0.80</td><td>B2B commodity, contract-repriced</td><td class="num negative">+40.0%</td></tr>
+        <tr><td>Asphalt / Road Construction</td><td class="num">42%</td><td class="num">0.80</td><td>Government contracts, cost-plus</td><td class="num negative">+33.6%</td></tr>
+        <tr><td>PVC Pipes &amp; Fittings</td><td class="num">35%</td><td class="num">0.75</td><td>Construction input, moderate competition</td><td class="num negative">+26.3%</td></tr>
+        <tr><td>Marine Shipping Fuel</td><td class="num">35%</td><td class="num">0.80</td><td>Commodity, bunker surcharges</td><td class="num negative">+28.0%</td></tr>
+        <tr><td>Fertilizers (nitrogen)</td><td class="num">35%</td><td class="num">0.80</td><td>Commodity input, limited substitution</td><td class="num negative">+28.0%</td></tr>
+        <tr><td>Heavy Equipment Fuel</td><td class="num">31%</td><td class="num">0.80</td><td>Construction, pass-through to clients</td><td class="num negative">+24.8%</td></tr>
+        <tr><td>Food Packaging (plastic)</td><td class="num">30%</td><td class="num">0.70</td><td>B2B, competitive market</td><td class="num negative">+21.0%</td></tr>
+        <tr><td>Jet Fuel / Airfares</td><td class="num">29%</td><td class="num">0.70</td><td>Competitive market, partial absorption</td><td class="num negative">+20.3%</td></tr>
+        <tr><td>Insulation Foam</td><td class="num">28%</td><td class="num">0.70</td><td>Construction input</td><td class="num negative">+19.6%</td></tr>
+        <tr><td>Tires / Synthetic Rubber</td><td class="num">26%</td><td class="num">0.65</td><td>Branded products, some absorption</td><td class="num negative">+16.9%</td></tr>
+        <tr><td>Roofing (shingles)</td><td class="num">23%</td><td class="num">0.65</td><td>Construction, bid-based pricing</td><td class="num negative">+15.0%</td></tr>
+        <tr><td>Ride-sharing / Delivery</td><td class="num">22%</td><td class="num">0.75</td><td>Direct fuel, driver pass-through</td><td class="num negative">+16.5%</td></tr>
+        <tr><td>Materials Transport</td><td class="num">21%</td><td class="num">0.75</td><td>Surcharges common</td><td class="num negative">+15.8%</td></tr>
+        <tr><td>Public Transit (bus)</td><td class="num">19%</td><td class="num">0.60</td><td>Subsidized, partial absorption</td><td class="num negative">+11.4%</td></tr>
+        <tr><td>Grain (farm gate)</td><td class="num">18%</td><td class="num">0.70</td><td>Commodity, global pricing</td><td class="num negative">+12.6%</td></tr>
+        <tr><td>Paints &amp; Coatings</td><td class="num">18%</td><td class="num">0.55</td><td>Branded, margin absorption</td><td class="num negative">+9.9%</td></tr>
+        <tr><td>Food Transport (avg)</td><td class="num">15%</td><td class="num">0.70</td><td>Surcharges, contracts</td><td class="num negative">+10.5%</td></tr>
+        <tr><td>Synthetic Fibers/Textiles</td><td class="num">14%</td><td class="num">0.50</td><td>Global supply chain, brand pricing</td><td class="num negative">+7.0%</td></tr>
+        <tr><td>Finished Plastic Goods</td><td class="num">12%</td><td class="num">0.50</td><td>Consumer-facing, competition</td><td class="num negative">+6.0%</td></tr>
+        <tr><td>Detergents &amp; Cleaning</td><td class="num">12%</td><td class="num">0.50</td><td>Branded, shelf-price sensitivity</td><td class="num negative">+6.0%</td></tr>
+        <tr><td>Residential Construction</td><td class="num">11%</td><td class="num">0.55</td><td>Mixed inputs, competitive bids</td><td class="num negative">+6.1%</td></tr>
+        <tr><td>Packaged/Processed Food</td><td class="num">10%</td><td class="num">0.50</td><td>Consumer brands, margin absorption</td><td class="num negative">+5.0%</td></tr>
+        <tr><td>Cosmetics/Personal Care</td><td class="num">9%</td><td class="num">0.40</td><td>High-margin, brand pricing power</td><td class="num negative">+3.6%</td></tr>
+        <tr><td>Meat (retail)</td><td class="num">8%</td><td class="num">0.50</td><td>Consumer-facing, competition</td><td class="num negative">+4.0%</td></tr>
+        <tr><td>Pharmaceuticals</td><td class="num">8%</td><td class="num">0.35</td><td>Regulated pricing, high margins</td><td class="num negative">+2.8%</td></tr>
+        <tr><td>Fresh Produce (retail)</td><td class="num">7%</td><td class="num">0.50</td><td>Perishable, limited absorption</td><td class="num negative">+3.5%</td></tr>
+        <tr><td>Dairy Products</td><td class="num">6%</td><td class="num">0.50</td><td>Consumer staple, competitive</td><td class="num negative">+3.0%</td></tr>
+        <tr><td>Restaurant Meal</td><td class="num">5%</td><td class="num">0.35</td><td>Service-intensive, menu stickiness</td><td class="num negative">+1.8%</td></tr>
+        <tr><td>Electronics (consumer)</td><td class="num">5%</td><td class="num">0.30</td><td>High margins, deflationary tech trend</td><td class="num negative">+1.5%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:12px;color:var(--text-light);">Pass-through rates reflect: (a) oil's share of total costs, (b) competitiveness and transparency of pricing, (c) demand elasticity, and (d) ability of producers to absorb margin compression. Commodity products with transparent pricing pass through at 0.75–0.90. Branded consumer products and services with high margins pass through at 0.30–0.55. These are estimates for a sustained (6+ month) shock; short-duration spikes would show lower pass-through.</p>
+
+  <p style="font-size:12px;color:var(--text-light);">Demand destruction adjustment: At $150/bbl, gasoline would exceed $5.50–6.00/gallon nationally, sharply reducing vehicle miles traveled; airlines would cut 10–15% of capacity; and petrochemical demand would decline. The EIA estimates short-run price elasticity of oil demand at approximately −0.05 to −0.10 (a 10% price increase reduces demand by 0.5–1.0% within months). The consumer price impacts above represent the initial pass-through before demand response, applicable to the first 3–6 months of a price shock. Beyond that horizon, demand destruction and supply response (Section 12.2) would begin to moderate both oil prices and downstream effects.</p>
+
+  <p style="font-size:12px;color:var(--text-light);">Additionally, second-order feedback loops (the cascade from diesel to fertilizer to feed to meat, for example) would amplify these first-order estimates to some degree, particularly for products at the end of long supply chains. The magnitude of this amplification is not quantified here but should be considered in stress testing.</p>
+
+  <p style="font-size:12px;color:var(--text-light);">Sources: Composite model applying EIA, Goldman Sachs, and Forbes elasticities with sector-specific pass-through coefficients. Oil share midpoints from Table 1 ranges.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PART III                                    -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="part-divider">
+  <div class="part-divider-label">Part III</div>
+  <div class="part-divider-title">Energy Futures — How the Global Economy Hedges the Risk You're Now Living Through</div>
+</div>
+
+<!-- ══════════ SECTION 14: FUTURES MARKETS ══════════ -->
+<div class="section" id="s14">
+  <div class="section-number">Section 14</div>
+  <div class="section-title">How the Global Economy Hedges Oil Risk</div>
+
+  <p>As the preceding analysis makes clear, oil is embedded in virtually every product and service in the modern economy. That pervasive exposure creates enormous financial risk for every business that produces, transports, refines, and consumes energy, and for every industry downstream of it. Energy futures markets exist precisely to manage that risk. They are the mechanism through which airlines, trucking companies, refiners, utilities, farmers, manufacturers, and municipalities attempt to insulate themselves and their customers from the kind of price shock the Iran war has now delivered.</p>
+
+  <p>The scale of this hedging infrastructure is immense. Hundreds of distinct energy futures and options contracts trade across the world's major exchanges, CME Group (which owns NYMEX), Intercontinental Exchange (ICE), the Gulf Mercantile Exchange (GME), the Shanghai International Energy Exchange (INE), ICE Futures Abu Dhabi (IFAD), and the Tokyo Commodity Exchange (TOCOM), covering crude oil benchmarks (WTI, Brent, Oman, Murban, Shanghai SC), refined products (gasoline, diesel, gasoil, jet fuel, ethanol), natural gas (Henry Hub, Dutch TTF, UK NBP, Asian JKM LNG, and 30+ U.S. regional basis hubs), electric power (PJM, ERCOT, NYISO, ISO-NE, and European markets), coal, petrochemicals, NGLs, carbon emissions allowances, and a growing suite of energy transition products.</p>
+
+  <div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
+    <div class="stat-box">
+      <div class="stat-value">8.3<span class="stat-unit">M</span></div>
+      <div class="stat-label">CME Contracts in 1 Day<br>(Record set March 6, 2026)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">5.73<span class="stat-unit">M</span></div>
+      <div class="stat-label">Crude Oil Complex<br>(Record single-day volume)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">2.7<span class="stat-unit">M</span></div>
+      <div class="stat-label">CME Energy ADV 2025<br>(Record annual avg daily volume)</div>
+    </div>
+  </div>
+  <div class="stat-row" style="grid-template-columns:repeat(3,1fr);">
+    <div class="stat-box">
+      <div class="stat-value">276<span class="stat-unit">M</span></div>
+      <div class="stat-label">ICE Energy Q3 2024<br>(Futures &amp; options contracts)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">1.5<span class="stat-unit">M</span></div>
+      <div class="stat-label">ICE Brent ADV<br>(Record Q3 2024)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">100s</div>
+      <div class="stat-label">Contract Types<br>(Across 6+ global exchanges)</div>
+    </div>
+  </div>
+
+  <p>That liquidity matters: it means that when a crisis hits, there is a functioning market deep enough for thousands of companies to simultaneously adjust their positions. When the Iran conflict escalated in early March 2026, the CME energy complex shattered records, trading 8.3 million contracts in a single day on March 6, including a record crude oil complex volume of 5.73 million contracts. Bloomberg's Energy Secretary Wright interview confirmed that "oil from US reserves started flowing Friday", a strategic petroleum reserve release that itself interacts with the futures market pricing mechanism.</p>
+</div>
+
+<!-- ══════════ SECTION 15: HEDGING USE CASES ══════════ -->
+<div class="section" id="s15">
+  <div class="section-number">Section 15</div>
+  <div class="section-title">Hedging Use Cases Across the Economy</div>
+
+  <h4>15.1 Airlines</h4>
+  <p>Airlines are among the most visible energy hedgers. Jet fuel typically represents 20–30% of operating costs, and a single carrier may consume billions of gallons per year. By locking in fuel prices months or years in advance through futures and options, airlines can stabilize ticket prices and protect margins. Southwest Airlines famously saved billions through aggressive fuel hedging during previous oil spikes. In the current crisis, airlines with hedges in place entering 2026 are significantly better positioned than those that were unhedged, a divergence that will manifest in fare increases, route cuts, and profitability over coming quarters.</p>
+
+  <h4>15.2 Trucking and Freight</h4>
+  <p>With diesel the single largest variable cost in long-haul trucking, and a single cross-country load burning 400 gallons, even a $1/gallon increase adds $400 per trip. Large carriers hedge diesel exposure using NYMEX ultra-low sulfur diesel (ULSD) futures and heating oil contracts, often supplemented by fuel surcharge mechanisms that pass residual risk to shippers. Smaller operators who cannot access futures markets are the most exposed and the first to exit the industry when prices spike, tightening capacity and amplifying the inflationary spiral.</p>
+
+  <h4>15.3 Refiners and Crack Spreads</h4>
+  <p>Refiners use crude oil and refined product futures simultaneously to lock in "crack spreads", the margin between input cost (crude) and output prices (gasoline, diesel, jet fuel). In the current environment, crack spreads have widened dramatically as refined product prices have outpaced crude, rewarding refiners who locked in processing margins while creating windfall volatility for those who didn't.</p>
+
+  <h4>15.4 Utilities and Power Generators</h4>
+  <p>Utilities hedge natural gas and coal exposure to stabilize electricity rates for consumers. A municipal utility that locked in Henry Hub natural gas at $3.00/MMBtu before the crisis is now shielding ratepayers from sharply higher spot prices. Conversely, utilities buying spot or with hedges rolling off are passing through higher energy costs to residential and commercial customers, a dynamic playing out across PJM, ERCOT, and European power markets simultaneously.</p>
+
+  <h4>15.5 Agriculture</h4>
+  <p>Agriculture is deeply exposed through both fuel and fertilizer. Natural gas is the primary feedstock for ammonia-based fertilizers, meaning fertilizer prices move in near-lockstep with energy markets. Farmers and agricultural cooperatives use futures to hedge diesel, natural gas exposure embedded in fertilizer costs, and transportation costs. Bloomberg's Odd Lots documented how the current energy shock is expected to drive fertilizer costs significantly higher for the 2026–2027 growing season.</p>
+
+  <h4>15.6 Municipalities and Waste Haulers</h4>
+  <p>Garbage trucks averaging 3–4 MPG and running stop-and-start routes all day are among the most fuel-intensive vehicles on the road. Larger waste management companies hedge diesel costs; smaller haulers and municipal operations often cannot, meaning costs flow directly to taxpayers through higher collection fees or property tax assessments.</p>
+
+  <h3>Energy Hedging by Sector</h3>
+
+  <div class="data-table-wrapper">
+    <table class="data-table hedge-table">
+      <thead>
+        <tr><th>Sector</th><th>Fuel/Energy as % of Op Cost</th><th>Primary Hedging Instruments</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Airlines (jet fuel)</td><td class="num">29%</td><td>NYMEX Crude, Jet Fuel Swaps</td></tr>
+        <tr><td>Trucking (diesel)</td><td class="num">35%</td><td>NYMEX ULSD, Heating Oil</td></tr>
+        <tr><td>Refiners (crack spread)</td><td class="num">55%</td><td>Crude + Product Futures</td></tr>
+        <tr><td>Utilities (natgas)</td><td class="num">25%</td><td>Henry Hub, Basis Swaps</td></tr>
+        <tr><td>Agriculture (fert+fuel)</td><td class="num">30%</td><td>HH Gas, ULSD, Urea</td></tr>
+        <tr><td>Waste Hauling (diesel)</td><td class="num">22%</td><td>NYMEX ULSD</td></tr>
+        <tr><td>Mining (diesel+energy)</td><td class="num">28%</td><td>ULSD, Power Futures</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>15.7 The Costs and Risks of Hedging: What You're Trading Off</h3>
+
+  <p>Futures and options provide powerful tools for managing energy price risk, but they are not free insurance. Any business considering a hedging program should understand the following trade-offs.</p>
+
+  <p><strong>Premium cost:</strong> Options strategies (caps, collars, put spreads) require upfront premium payments that represent a real cost even if the hedge is never triggered. A typical crude oil call option at $100/bbl strike for 6 months forward might cost $3–$6/bbl depending on volatility, a meaningful expense that must be weighed against the protection provided.</p>
+
+  <p><strong>Opportunity cost:</strong> Fixed-price hedges (swaps, futures) lock in a price. If oil falls below the hedged price, the hedger pays above-market rates while unhedged competitors enjoy lower costs. Southwest Airlines' famous hedging gains in 2008 were preceded by periods where their hedges were underwater. Hedging smooths costs, it does not guarantee the lowest cost.</p>
+
+  <p><strong>Margin and liquidity requirements:</strong> Exchange-traded futures require initial margin (typically 5–10% of notional value) and daily mark-to-market margin. In volatile markets, margin calls can create severe cash flow strain, particularly for smaller companies. The March 2026 volatility surge generated margin calls that forced some participants to liquidate positions at unfavorable prices.</p>
+
+  <p><strong>Basis risk:</strong> Standard exchange-traded contracts (WTI crude, NYMEX ULSD) may not perfectly match a company's actual exposure (Gulf Coast jet fuel, Midwest diesel, Appalachian natural gas). This "basis risk" means the hedge may not fully offset the cost increase experienced in practice.</p>
+
+  <p><strong>Complexity and expertise:</strong> Effective hedging requires ongoing monitoring, position management, and expertise in derivatives markets. Poorly structured hedges can increase risk rather than reduce it.</p>
+
+  <p>These trade-offs do not argue against hedging, for most energy-intensive businesses facing the current geopolitical environment, some form of price risk management is prudent. But they argue for hedging with clear eyes about what you are gaining and what you are giving up. The gap between hedged and unhedged operators within each sector remains the key competitive variable during price shocks, but hedging decisions should be informed by firm-specific exposure analysis, not by fear alone.</p>
+
+  <div class="pull-quote">
+    <p>"The critical point is this: the businesses that hedged before the crisis are now insulated, temporarily, from the worst of the shock. Those that didn't are passing costs directly to consumers, or absorbing losses that threaten their viability. And even the best hedges eventually roll off. If oil remains above $100 for six months, twelve months, or longer, even well-hedged companies will be repricing at the new reality. The futures markets don't eliminate risk, they redistribute it across time and across participants. In a sustained crisis, they buy time. But they cannot repeal the fundamental economics of a world that runs on oil."</p>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 16: INTEGRATED SUMMARY ══════════ -->
+<div class="section" id="s16">
+  <div class="section-number">Section 16</div>
+  <div class="section-title">Integrated Scenario Summary</div>
+  <div class="section-subtitle">Table 2. Comprehensive Macroeconomic Impact by Oil Price Scenario</div>
+
+  <div class="data-table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>$75 (Base)</th><th>$100</th><th>$125</th><th>$150</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Price move from base</td><td class="num">—</td><td class="num">+33%</td><td class="num">+67%</td><td class="num">+100%</td></tr>
+        <tr><td>CPI add (central/nonlinear)</td><td class="num">0</td><td class="num negative">+0.8pp</td><td class="num negative">+1.3pp</td><td class="num negative">+1.7pp</td></tr>
+        <tr><td>CPI add (linear upper bound)</td><td class="num">0</td><td class="num negative">+0.9pp</td><td class="num negative">+1.6pp</td><td class="num negative">+2.2pp</td></tr>
+        <tr><td>PCE add (Fed DSGE)</td><td class="num">0</td><td class="num">+0.5pp</td><td class="num">+0.9pp</td><td class="num">+1.2pp</td></tr>
+        <tr><td>Gross GDP drag</td><td class="num">0</td><td class="num negative">−0.5%</td><td class="num negative">−1.0%</td><td class="num negative">−1.5%</td></tr>
+        <tr><td>Net GDP drag (after producer offset)</td><td class="num">0</td><td class="num negative">−0.3 to −0.4%</td><td class="num negative">−0.7 to −0.8%</td><td class="num negative">−1.0 to −1.2%</td></tr>
+        <tr><td>Annual net GDP loss ($B)</td><td class="num">$0</td><td class="num negative">−$80 to −$105B</td><td class="num negative">−$180 to −$210B</td><td class="num negative">−$260 to −$320B</td></tr>
+        <tr><td>Gasoline price impact</td><td class="num">—</td><td class="num negative">+12–15%</td><td class="num negative">+25–30%</td><td class="num negative">+40–50%</td></tr>
+        <tr><td>Food price impact</td><td class="num">—</td><td class="num negative">+2–4%</td><td class="num negative">+5–9%</td><td class="num negative">+8–15%</td></tr>
+        <tr><td>Recession risk (qualitative)</td><td class="num">Low</td><td class="num" style="color:var(--chart-orange);font-weight:600;">Moderate</td><td class="num" style="color:var(--chart-red);font-weight:600;">High</td><td class="num" style="color:#8b0000;font-weight:600;">Very High</td></tr>
+        <tr><td>Historical precedent</td><td class="num">Normal</td><td class="num">2011–2014</td><td class="num">2007 pre-crash</td><td class="num">2008 peak</td></tr>
+        <tr><td>Most likely duration</td><td class="num">—</td><td class="num">Sustained possible</td><td class="num">Months (supply response)</td><td class="num">Weeks–months (tail risk)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:12px;color:var(--text-light);">Sources: Goldman Sachs (CPI, via Seeking Alpha), Federal Reserve DSGE (PCE), Forbes (gross GDP), producer offset per Kilian (2009), Bloomberg (market data/recession history). Central CPI uses declining marginal pass-through; upper bound uses linear extrapolation. Net GDP drag reflects U.S. net energy exporter status. Duration assessment reflects supply-side response analysis (Section 12.2).</p>
+</div>
+
+<!-- ══════════ SECTION 17: WHAT YOU CAN DO ══════════ -->
+<div class="section" id="s17">
+  <div class="section-number">Section 17</div>
+  <div class="section-title">What You Can Do About It</div>
+
+  <p>The risks described in this paper are showing up in fuel bills, input costs, freight invoices, and operating margins now. They may intensify if the Iran conflict escalates, though structural buffers (U.S. energy production, declining oil intensity, supply-side responsiveness) provide more resilience than the economy had in previous shock episodes.</p>
+
+  <p>Whether you're an airline managing jet fuel exposure, a trucking company facing diesel volatility, a manufacturer watching petrochemical feedstock costs climb, a utility trying to stabilize rates for ratepayers, a municipality budgeting for fleet fuel and waste hauling, or an agricultural operation exposed through fertilizer and diesel, the tools to manage this risk exist, and they're accessible. As Section 15.7 details, these tools involve real costs and trade-offs that should be evaluated against your specific exposure profile.</p>
+
+  <p>The team at RCM specializes in helping businesses across the energy supply chain build and execute hedging strategies tailored to their specific exposures. From structuring futures and options positions on crude oil, refined products, natural gas, and power, to ongoing risk management advisory and execution, RCM has the expertise to help you evaluate whether and how to manage your energy cost exposure.</p>
+
+  <div class="callout-cyan callout">
+    <p>RCM helps airlines, trucking companies, refiners, utilities, municipalities, agricultural operations, and manufacturers hedge energy price exposure using futures, options, and tailored risk management strategies.</p>
+  </div>
+
+  <div style="text-align:center;margin:40px 0 10px;">
+    <a href="https://www.rcmalternatives.com" class="btn">📞 Contact RCM to Discuss Your Energy Price Exposure →</a>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 18: REFERENCES ══════════ -->
+<div class="section" id="s18">
+  <div class="section-number">Section 18</div>
+  <div class="section-title">References</div>
+
+  <div class="ref-list">
+    <p>[1] Bloomberg. "Oil Is Market 'Singularly Focused' on Hormuz, Vitol Says." "Stocks Rise, Oil Falls as Trump Eases Iran Threats." March 23, 2026. bloomberg.com.</p>
+    <p>[2] Forbes. "Why The Iran War Poses Risks To AI." Newsletter by Alex Knapp. March 2026. forbes.com.</p>
+    <p>[3] Bloomberg. "Why Diesel Prices Are the Real Concern for the Economy." Businessweek, March 2026. bloomberg.com.</p>
+    <p>[4] Bloomberg Odd Lots. "War in Iran Squeezes America's Farmers Again" (47:36); "Iran War Redraws the Map for Natural Gas" (44:43); "The Chokepoint to End All Chokepoints." March 2026.</p>
+    <p>[5] Federal Reserve. "Federal Reserve issues FOMC statement." Press Release, March 18, 2026. "Economic projections from the March 17-18 FOMC meeting." federalreserve.gov.</p>
+    <p>[6] Federal Reserve. Speech by Vice Chair Bowman on liquidity resiliency, March 3, 2026; Speech by Governor Waller on economic outlook, February 23, 2026. federalreserve.gov.</p>
+    <p>[7] Goldman Sachs. Sustained 10% oil price rise → +0.28pp headline CPI. Via Seeking Alpha. Original research report date and model specification not independently verified; readers should consult Goldman Sachs directly for the primary source.</p>
+    <p>[8] Federal Reserve DSGE model. 10% oil price increase → +0.15pp headline PCE inflation. federalreserve.gov.</p>
+    <p>[9] Forbes. Each $10/barrel oil rise ≈ −0.2% GDP (~$35–50B/yr). forbes.com. Broadly consistent with Hamilton (2003) academic estimates.</p>
+    <p>[10] Bloomberg. Historical analysis: oil rises ≈50% above trend preceded U.S. recessions. bloomberg.com.</p>
+    <p>[11] Forbes. "Nightmare TSA Lines Erupt Again: Atlanta, Houston Airports Among Those Hardest Hit." March 2026. forbes.com.</p>
+    <p>[12] Bloomberg. "Estée Lauder in Talks to Buy Spain's Puig to Create Beauty Giant." March 23, 2026. bloomberg.com.</p>
+    <p>[13] Bloomberg. "How Iran War Is Disrupting the Food Supply Chain." Video, March 2026. bloomberg.com.</p>
+    <p>[14] Forbes. "Trump Wants $200 Billion More For Iran War. Here's What Else That Could Fund." By Sara Dorn. March 2026.</p>
+    <p>[15] Bloomberg. "Consumers Are Paying the Price for the 'Strategic Trap' of War in Iran." Video, March 2026.</p>
+    <p>[16] Forbes. "Trump Approval Rating Stable As MAGA Mostly Backs War In Iran—But Majority Of Americans Don't." By Sara Dorn. March 2026.</p>
+    <p>[17] Bloomberg. "Worried About Job Security? The US Still Has an Edge." Video, March 2026.</p>
+    <p>[18] Forbes. "The Job Market Is Sending Mixed Messages—Here's How To Build Resilience." By Tracy Brower. March 2026.</p>
+    <p>[19] Bloomberg. "China's Record Deflation Finds Dangerous Cure in Oil Shock." March 2026.</p>
+    <p>[20] Bloomberg. "Israel Says Economy Lost Over $57 Billion During Two Years of War in Gaza." March 2026.</p>
+    <p>[21] Bloomberg Odd Lots Newsletter. "The Chokepoint to End All Chokepoints." March 2026.</p>
+    <p>[22] Bloomberg. "Oil From US Reserves Started Flowing Friday, Says Energy Secretary Wright." Video, March 2026.</p>
+    <p>[23] Bloomberg. "TotalEnergies' CEO Says US-Europe Should Form an LNG Pact." March 2026.</p>
+    <p>[24] Bloomberg CityLab. "NYC Subway Looks to Replace Over 2,000 Train Cars in Aging Fleet." March 2026.</p>
+    <p>[25] U.S. Energy Information Administration. Gasoline price components; petroleum product data; U.S. net energy trade data; oil intensity of GDP historical series. eia.gov.</p>
+    <p>[26] International Energy Agency. <em>The Future of Petrochemicals.</em> 2018. IEA, Paris.</p>
+    <p>[27] Resilience.org. Cobb, K. "Is the complacency in global financial markets warranted?" March 2026.</p>
+    <p>[28] CME Group. Record energy ADV 2025 (2.7M); record single-day March 6, 2026 (8.3M contracts).</p>
+    <p>[29] ICE. 276M energy contracts Q3 2024; Brent record ADV 1.5M.</p>
+    <p>[30] Hamilton, J.D. (2003). "What Is an Oil Shock?" <em>Journal of Econometrics,</em> 113(2), 363–398.</p>
+    <p>[31] Kilian, L. (2009). "Not All Oil Price Shocks Are Alike: Disentangling Demand and Supply Shocks in the Crude Oil Market." <em>American Economic Review,</em> 99(3), 1053–1069.</p>
+    <p>[32] Baumeister, C. &amp; Kilian, L. (2016). "Forty Years of Oil Price Fluctuations: Why the Price of Oil May Still Surprise Us." <em>Journal of Economic Perspectives,</em> 30(1), 139–160.</p>
+    <p>[33] Acemoglu, D., Carvalho, V.M., Ozdaglar, A. &amp; Tahbaz-Salehi, A. (2012). "The Network Origins of Aggregate Fluctuations." <em>Econometrica,</em> 80(5), 1977–2016.</p>
+    <p>[34] Baqaee, D. &amp; Farhi, E. (2019). "The Macroeconomic Impact of Microeconomic Shocks: Beyond Hulten's Theorem." <em>Econometrica,</em> 87(4), 1155–1203.</p>
+    <p>[35] Herrera, A.M. &amp; Pesavento, E. (2009). "Oil Price Shocks, Systematic Monetary Policy, and the 'Great Moderation.'" <em>Macroeconomic Dynamics,</em> 13(1), 107–137.</p>
+  </div>
+</div>
+
+</div><!-- /content-wrapper -->
+
+<!-- ══════════ FOOTER ══════════ -->
+<div class="page-footer">
+  <div class="footer-logo">
+    <img src="https://www.rcmalternatives.com/wp-content/themes/RCM/assets/images/RCMLogoBlue@2x.png" alt="RCM">
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-text">
+    <strong>Disclaimer:</strong> The oil input cost shares and macroeconomic projections in this paper are composite estimates derived from published models and data sources as cited. They are presented as ranges reflecting estimation uncertainty, not as precise predictions. Central CPI estimates use a nonlinear declining pass-through model; linear extrapolations are provided as upper bounds. GDP estimates are presented both gross and net of the domestic energy producer offset. Recession risk assessments are qualitative, based on historical pattern-matching with a small sample (n=4), and should not be interpreted as calibrated probabilities. Actual outcomes depend on duration of price shock, monetary policy response, substitution effects, demand destruction, supply-side response, energy transition dynamics, and geopolitical developments. The U.S. economy's oil intensity has declined substantially since the 1970s, providing structural buffers not present in earlier shock episodes. Market data from Bloomberg as of March 23, 2026. This paper does not constitute investment advice. Energy hedging involves costs and risks including premium expense, opportunity cost, margin requirements, basis risk, and complexity (see Section 15.7); consult qualified advisors before implementing strategies.
+    <br><br>
+    <strong>About RCM:</strong> RCM is an energy risk management advisory firm specializing in helping commercial, industrial, and institutional clients build and execute hedging strategies across crude oil, refined products, natural gas, power, and agricultural commodities using exchange-traded futures and options. RCM receives fees for advisory and execution services. This paper is published by RCM; see disclosure on page 1.
+    <br><br>
+    © 2026 RCM. All rights reserved.
+  </div>
+</div>
+
+<script>
+(function(){
+  const tip = document.createElement('div');
+  tip.id = 'globalTooltip';
+  document.body.appendChild(tip);
+
+  document.querySelectorAll('.bar-row[data-info]').forEach(row => {
+    const track = row.querySelector('.bar-track');
+    track.addEventListener('mouseenter', () => {
+      const parts = row.getAttribute('data-info').split('|');
+      tip.innerHTML = '<div style="font-weight:700;margin-bottom:4px;color:#A2D5FF;">' + parts[0] + '</div>' +
+        '<div style="font-family:JetBrains Mono,monospace;font-size:20px;font-weight:700;margin-bottom:4px;">' + parts[1] + '</div>' +
+        '<div style="font-size:12px;color:#87ADD6;">' + (parts[2]||'') + '</div>';
+      tip.style.display = 'block';
+    });
+    track.addEventListener('mousemove', e => {
+      let x = e.clientX + 16, y = e.clientY - 20;
+      tip.style.left = x + 'px';
+      tip.style.top = y + 'px';
+      const r = tip.getBoundingClientRect();
+      if (r.right > window.innerWidth - 10) tip.style.left = (e.clientX - r.width - 16) + 'px';
+      if (r.bottom > window.innerHeight - 10) tip.style.top = (e.clientY - r.height - 10) + 'px';
+    });
+    track.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+  });
+})();
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.bar-fill').forEach((f, i) => {
+        const w = f.style.width;
+        f.style.width = '0%';
+        setTimeout(() => { f.style.width = w; }, i * 60 + 100);
+      });
+      obs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.bar-chart').forEach(c => obs.observe(c));
+</script>
+</body>
+</html>
